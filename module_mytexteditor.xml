@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_mytexteditor" default="compile.module.mytexteditor">
+  <dirname property="module.mytexteditor.basedir" file="${ant.file.module_mytexteditor}"/>
+  
+  <property name="module.jdk.home.mytexteditor" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.mytexteditor" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.mytexteditor" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.mytexteditor" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="mytexteditor.output.dir" value="${module.mytexteditor.basedir}/out/production/MyTextEditor"/>
+  <property name="mytexteditor.testoutput.dir" value="${module.mytexteditor.basedir}/out/test/MyTextEditor"/>
+  
+  <path id="mytexteditor.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="mytexteditor.module.production.classpath">
+    <path refid="${module.jdk.classpath.mytexteditor}"/>
+  </path>
+  
+  <path id="mytexteditor.runtime.production.module.classpath">
+    <pathelement location="${mytexteditor.output.dir}"/>
+  </path>
+  
+  <path id="mytexteditor.module.classpath">
+    <path refid="${module.jdk.classpath.mytexteditor}"/>
+    <pathelement location="${mytexteditor.output.dir}"/>
+  </path>
+  
+  <path id="mytexteditor.runtime.module.classpath">
+    <pathelement location="${mytexteditor.testoutput.dir}"/>
+    <pathelement location="${mytexteditor.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.mytexteditor">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.mytexteditor">
+    <patternset refid="excluded.from.module.mytexteditor"/>
+  </patternset>
+  
+  <path id="mytexteditor.module.sourcepath">
+    <dirset dir="${module.mytexteditor.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.mytexteditor" depends="compile.module.mytexteditor.production,compile.module.mytexteditor.tests" description="Compile module MyTextEditor"/>
+  
+  <target name="compile.module.mytexteditor.production" depends="register.custom.compilers" description="Compile module MyTextEditor; production classes">
+    <mkdir dir="${mytexteditor.output.dir}"/>
+    <javac2 destdir="${mytexteditor.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.mytexteditor}/javac">
+      <compilerarg line="${compiler.args.mytexteditor}"/>
+      <bootclasspath refid="mytexteditor.module.bootclasspath"/>
+      <classpath refid="mytexteditor.module.production.classpath"/>
+      <src refid="mytexteditor.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.mytexteditor"/>
+    </javac2>
+    
+    <copy todir="${mytexteditor.output.dir}">
+      <fileset dir="${module.mytexteditor.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.mytexteditor.tests" depends="register.custom.compilers,compile.module.mytexteditor.production" description="compile module MyTextEditor; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.mytexteditor" description="cleanup module">
+    <delete dir="${mytexteditor.output.dir}"/>
+    <delete dir="${mytexteditor.testoutput.dir}"/>
+  </target>
+</project>
