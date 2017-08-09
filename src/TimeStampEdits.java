@@ -59,6 +59,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
                 e1.printStackTrace();
             }
         }
+        // TODO fix line numberson newline so that newlines are counted as previous lines
 
         int caretPosition = docEvents.getDocument().getLength();
         Element root = docEvents.getDocument().getDefaultRootElement();
