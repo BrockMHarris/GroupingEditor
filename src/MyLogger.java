@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.logging.*;
 
-public class MyLogger {
+class MyLogger {
     static private FileHandler fileTxt;
     static private SimpleFormatter formatterTxt;
 

@@ -4,7 +4,7 @@ import java.awt.*;
 /**
  * Created by harrisb on 7/10/17.
  */
-public class TextEditor
+class TextEditor
 {
     public static void main(String[] args)
     {

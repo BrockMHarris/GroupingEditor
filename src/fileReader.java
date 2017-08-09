@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Created by harrisb on 8/8/17.
  */
-public class fileReader
+class fileReader
 {
     private String fulltxt = "";
     private ArrayList<String> info;

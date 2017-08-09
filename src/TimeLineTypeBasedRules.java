@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Created by harrisb on 7/19/17.
  */
-public class TimeLineTypeBasedRules implements UndoRule
+class TimeLineTypeBasedRules implements UndoRule
 {
 
     public boolean withPrevious(ArrayList<TimeStampEdits> edits)

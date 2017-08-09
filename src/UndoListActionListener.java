@@ -5,7 +5,7 @@ import java.awt.event.*;
 /**
  * Created by harrisb on 7/21/17.
  */
-public class UndoListActionListener implements ActionListener
+class UndoListActionListener implements ActionListener
 {
     private JComboBox undoList;
     private Editor app;

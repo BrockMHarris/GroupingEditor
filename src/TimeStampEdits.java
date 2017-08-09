@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Created by harrisb on 7/10/17.
  */
-public class TimeStampEdits extends CompoundEdit implements UndoableEdit
+class TimeStampEdits extends CompoundEdit implements UndoableEdit
 {
 
     private final AbstractDocument.DefaultDocumentEvent docEvents;

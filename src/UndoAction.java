@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by harrisb on 7/10/17.
  */
-public class UndoAction implements ActionListener{
+class UndoAction implements ActionListener{
     Editor app;
     JButton undo;
     public UndoAction(Editor Editor, JButton undo){

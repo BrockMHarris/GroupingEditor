@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by harrisb on 7/19/17.
  */
-public class RulesActionListener implements ActionListener
+class RulesActionListener implements ActionListener
 {
     Editor app;
     JComboBox rules;

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Created by harrisb on 7/17/17.
  */
-public class MyCompoundEdit extends javax.swing.undo.CompoundEdit
+class MyCompoundEdit extends javax.swing.undo.CompoundEdit
 {
     public MyCompoundEdit()
     {

@@ -3,7 +3,7 @@ import javax.swing.*;
 /**
  * Created by harrisb on 7/25/17.
  */
-public class MyBackroundMethod extends Thread
+class MyBackroundMethod extends Thread
 {
     private JButton undo;
     private JButton redo;
