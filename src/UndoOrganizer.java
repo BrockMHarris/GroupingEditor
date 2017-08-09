@@ -82,7 +82,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         //        groups.get(i).die();
         //    }
         //}
-
+        // TODO Fix this undoManager problem where the significant edit adds an extra necessary undo
         edits.add(timeEdit);
         isHighliting = false;
         if (edits.size() <= 1)
