@@ -82,7 +82,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         //        groups.get(i).die();
         //    }
         //}
-        // TODO Fix this undoManager problem where the significant edit adds an extra necessary undo
         edits.add(timeEdit);
         isHighliting = false;
         if (edits.size() <= 1)
@@ -116,20 +115,20 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     public void undo() throws CannotUndoException
     {
         previousText = pane.getText();
-        timeEdit.setSignificant(true);
         //if(groups.get(groupPointer).isInProgress())
         //{
         //    getGroups().get(groupPointer).end();
         //    //super.addEdit(currentGroup);
         //}
         undoManager.undo();
-
+        timeEdit.setSignificant(true);
         //groups.get(groupPointer).undo();
         //groupPointer--;
 
     }
     public void redo() throws CannotUndoException
     {
+        edits.get(0).setSignificant(false);
         undoManager.redo();
         //groupPointer++;
         //groups.get(groupPointer).redo();
