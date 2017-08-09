@@ -8,8 +8,9 @@ class LineBasedRules implements UndoRule
     @Override
     public boolean withPrevious(ArrayList<TimeStampEdits> edits)
     {
+        boolean isNewLine = edits.get(edits.size()-1).getText().contains("\n");
         boolean lineChange = edits.get(edits.size()-1).getLineNumber() != edits.get(edits.size()-2).getLineNumber();
 
-        return !(lineChange);
+        return (!lineChange || isNewLine);
     }
 }
