@@ -8,6 +8,7 @@ public class TextEditor
 {
     public static void main(String[] args)
     {
+        //This is a test
         MyLogger logger = new MyLogger();
         JFrame frame = new JFrame("UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
