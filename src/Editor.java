@@ -7,6 +7,7 @@ import java.util.Vector;
  */
 class Editor extends JTextArea
 {
+    //git commit
     private JComboBox box;
     private UndoOrganizer undoOrganizer;
     private static MyLogger logger;
