@@ -59,6 +59,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         rule = new TimeLineBasedRules();
         pane.addCaretListener(this);
         undoManager = new UndoManager();
+        undoManager.setLimit(-1);
         currentGroup = new MyCompoundEdit();
         this.logger = logger;
 
