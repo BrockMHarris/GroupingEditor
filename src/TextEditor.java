@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
 /**
@@ -16,6 +17,15 @@ class TextEditor
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Editor app = new Editor(logger);
 
+        app.setTabSize(4);
+        EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                AbstractDocument doc = (AbstractDocument)app.getDocument();
+                doc.setDocumentFilter( new NewLineFilter() );
+            }
+        });
         //JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
         //JComboBox ruleSelection = new JComboBox(app.getRule());
         //ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
