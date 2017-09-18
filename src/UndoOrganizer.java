@@ -121,6 +121,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         //    getGroups().get(groupPointer).end();
         //    //super.addEdit(currentGroup);
         //}
+        edits.get(0).setSignificant(true);
         undoManager.undo();
         timeEdit.setSignificant(true);
         //groups.get(groupPointer).undo();
