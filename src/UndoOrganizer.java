@@ -190,6 +190,18 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         return groups;
     }
 
+    private void inputKeyTyped(java.awt.event.KeyEvent evt) {
+        String text = "";
+        if (evt.getKeyChar()=='('){
+            text = pane.getText();
+            text = text + ")";
+            pane.setText(text);
+            pane.setCaretPosition(pane.getText().length()-1);
+        }
+    }
+
+
+
     /**
      * This is the document listener i use removeUpdate to see what sections were removed so i can check which letters
      * were there and apply a name to the right timeStamped Object, these listeners are triggered before the undoable edit listener above
@@ -252,6 +264,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         name = Character.toString(keyEvent.getKeyChar());
+        inputKeyTyped(keyEvent);
 
     }
 
