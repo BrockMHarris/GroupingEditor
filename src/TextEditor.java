@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 /**
@@ -14,16 +16,21 @@ class TextEditor
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Editor app = new Editor(logger);
 
-        JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
-        JComboBox ruleSelection = new JComboBox(app.getRule());
-        ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
-        ruleSelection.setSelectedIndex(1);
+        //JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
+        //JComboBox ruleSelection = new JComboBox(app.getRule());
+        //ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
+        //ruleSelection.setSelectedIndex(1);
 
-        UndoListActionListener actionListener = new UndoListActionListener(app, undoList);
-        undoList.addActionListener(actionListener);
+        //UndoListActionListener actionListener = new UndoListActionListener(app, undoList);
+        //undoList.addActionListener(actionListener);
 
         JScrollPane scroll = new JScrollPane(app);
         frame.getContentPane().add(scroll);
+
+        LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(app);
+        scroll.setRowHeaderView(lineNumberingTextArea);
+
+        app.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
 
         JToolBar tb = new JToolBar();
         JButton btnUndo = new JButton("Undo");
@@ -33,13 +40,13 @@ class TextEditor
         btnRedo.addActionListener(new RedoAction(app, btnRedo));
         tb.add(btnUndo);
         tb.add(btnRedo);
-        tb.add(ruleSelection);
-        tb.add(undoList);
+        //tb.add(ruleSelection);
+        //tb.add(undoList);
 
         btnUndo.setFocusable(false);
         btnRedo.setFocusable(false);
-        ruleSelection.setFocusable(false);
-        undoList.setFocusable(false);
+        //ruleSelection.setFocusable(false);
+        //undoList.setFocusable(false);
 
         MyBackroundMethod thread = new MyBackroundMethod(btnUndo, btnRedo, app);
         new Thread(thread).start();

@@ -160,26 +160,28 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"
      */
     void setRule(String rule){
-        switch (rule){
-            case "Time and Line and Type":
-                this.rule = new TimeLineTypeBasedRules();
-                break;
-            case "Time and Line":
-                this.rule = new TimeLineBasedRules();
-                break;
-            case "Line and Type":
-                this.rule = new LineTypeBasedRules();
-                break;
-            case "Time":
-                this.rule = new TimeBasedRules();
-                break;
-            case "Line":
-                this.rule = new LineBasedRules();
-                break;
-            case "No Rules":
-                this.rule = new NoGroupBasedRules();
-                break;
-        }
+        this.rule = new LineBasedRules();
+
+//        switch (rule){
+//            case "Time and Line and Type":
+//                this.rule = new TimeLineTypeBasedRules();
+//                break;
+//            case "Time and Line":
+//                this.rule = new TimeLineBasedRules();
+//                break;
+//            case "Line and Type":
+//                this.rule = new LineTypeBasedRules();
+//                break;
+//            case "Time":
+//                this.rule = new TimeBasedRules();
+//                break;
+//            case "Line":
+//                this.rule = new LineBasedRules();
+//                break;
+//            case "No Rules":
+//                this.rule = new NoGroupBasedRules();
+//                break;
+//        }
     }
 
     Vector<MyCompoundEdit> getGroups(){
