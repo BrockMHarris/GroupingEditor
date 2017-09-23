@@ -24,7 +24,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     private int dot;
     private int mark;
 
-    private JTextArea pane;
+    private JEditorPane pane;
 
     private long timecreated;
     private boolean isSignificant;
@@ -38,7 +38,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      *             you can get the letter from either super class. This listener is a keystroke listner that saves the document and then a
      *             document listener gets the name, these are located in the UndoOrganizer
      */
-    TimeStampEdits(UndoableEditEvent e, String name, JTextArea pane, int Mark, int Dot, MyLogger logger)
+    TimeStampEdits(UndoableEditEvent e, String name, JEditorPane pane, int Mark, int Dot, MyLogger logger)
     {
         docEvents =(AbstractDocument.DefaultDocumentEvent) e.getEdit();
         letter = name;

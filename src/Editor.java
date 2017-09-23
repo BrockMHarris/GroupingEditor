@@ -5,7 +5,7 @@ import java.util.Vector;
 /**
  * Created by harrisb on 7/10/17.
  */
-class Editor extends JTextArea
+class Editor extends JEditorPane
 {
     //git commit
     private JComboBox box;

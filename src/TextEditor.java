@@ -17,7 +17,7 @@ class TextEditor
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Editor app = new Editor(logger);
 
-        app.setTabSize(4);
+        //app.setTabSize(4);
         EventQueue.invokeLater(new Runnable()
         {
             public void run()

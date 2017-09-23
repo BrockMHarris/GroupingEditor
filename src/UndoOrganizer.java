@@ -17,7 +17,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private ArrayList<TimeStampEdits> edits = new ArrayList<TimeStampEdits>();
     private Vector<MyCompoundEdit> groups = new Vector<MyCompoundEdit>();
     private int groupPointer;
-    private JTextArea pane;
+    private JEditorPane pane;
     private JComboBox undoList;
     private String previousText;
     private TimeStampEdits timeEdit;
@@ -30,18 +30,18 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private int dotLineNum;
     private int markLineNum;
 
-    private static String[] Rules = {"Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"};
+    static String[] Rules = {"Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"};
     private UndoRule rule;
 
     private int dot;
     private int mark;
 
-    private static final int NEWLINEKEYCODE = 10;
-    private static final int TABKEYCODE = 9;
+    static final int NEWLINEKEYCODE = 10;
+    static final int TABKEYCODE = 9;
 
     private MyCompoundEdit currentGroup;
     private UndoManager undoManager;
-    private static MyLogger logger;
+    static MyLogger logger;
 
     /**
      * This basically creates a listener class that makes all the decisions. This is the main class. it listens for
@@ -50,7 +50,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param Pane this is the JEditorPane that houses the text, I need this so i can get the actual readable characters
      *            and set then to the current TimeStampEdit in the case of a deletion
      */
-    UndoOrganizer(JTextArea Pane, MyLogger logger)
+    UndoOrganizer(JEditorPane Pane, MyLogger logger)
     {
         pane = Pane;
         //this.undoList = new JComboBox<MyCompoundEdit>(groups);
