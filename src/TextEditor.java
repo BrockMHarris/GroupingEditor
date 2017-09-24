@@ -16,7 +16,7 @@ class TextEditor
         JFrame frame = new JFrame("UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Editor app = new Editor(logger);
-
+        app.setRule(args[0]);
         //app.setTabSize(4);
         EventQueue.invokeLater(new Runnable()
         {
@@ -39,7 +39,6 @@ class TextEditor
 
         LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(app);
         scroll.setRowHeaderView(lineNumberingTextArea);
-
         app.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
 
         JToolBar tb = new JToolBar();

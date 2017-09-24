@@ -1,11 +1,12 @@
 import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
+import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 /**
  * Created by harrisb on 7/10/17.
  */
-class Editor extends JEditorPane
+class Editor extends JTextPane
 {
     //git commit
     private JComboBox box;
@@ -20,9 +21,8 @@ class Editor extends JEditorPane
         //setEditorKit(new StyledEditorKit());
         getDocument().addUndoableEditListener(undoOrganizer);
         getDocument().addDocumentListener(undoOrganizer);
-
+        keyBindings keyBindings = new keyBindings(this);
     }
-
     void undo()
     {
         undoOrganizer.undo();
@@ -42,7 +42,7 @@ class Editor extends JEditorPane
     void setRule(String rule){
         undoOrganizer.setRule(rule);
     }
-    String[] getRule(){
+    String getRule(){
         return undoOrganizer.getRule();
     }
     Vector<MyCompoundEdit> getGroups(){

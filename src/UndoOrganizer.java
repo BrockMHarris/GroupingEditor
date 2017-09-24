@@ -1,8 +1,9 @@
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.text.Element;
+import javax.swing.text.*;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private ArrayList<TimeStampEdits> edits = new ArrayList<TimeStampEdits>();
     private Vector<MyCompoundEdit> groups = new Vector<MyCompoundEdit>();
     private int groupPointer;
-    private JEditorPane pane;
+    private JTextPane pane;
     private JComboBox undoList;
     private String previousText;
     private TimeStampEdits timeEdit;
     private String name;
+
+    static final String[] keywords = {"for", "int", "float", "while", "if", "char", "long", "new", "public", "static", "void", "final"};
 
     private boolean lineChange;
     private boolean timeDiff;
@@ -32,6 +35,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     static String[] Rules = {"Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"};
     private UndoRule rule;
+    private String currentRule;
 
     private int dot;
     private int mark;
@@ -50,7 +54,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param Pane this is the JEditorPane that houses the text, I need this so i can get the actual readable characters
      *            and set then to the current TimeStampEdit in the case of a deletion
      */
-    UndoOrganizer(JEditorPane Pane, MyLogger logger)
+    UndoOrganizer(JTextPane Pane, MyLogger logger)
     {
         pane = Pane;
         //this.undoList = new JComboBox<MyCompoundEdit>(groups);
@@ -78,20 +82,12 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     {
         timeEdit = new TimeStampEdits(e, name, pane, dot, mark,logger);
 
-        //for(int i = 0; i < groups.size(); i++){
-        //    if(!groups.get(i).canUndo()){
-        //        groups.get(i).die();
-        //    }
-        //}
         edits.add(timeEdit);
         isHighliting = false;
         if (edits.size() <= 1)
         {
             timeEdit.setSignificant(true);
             undoManager.addEdit(timeEdit);
-            //groups.add(new MyCompoundEdit());
-            //groupPointer = groups.size() - 1;
-            //groups.get(groups.size()-1).addEdit(timeEdit);
         }
         else
         {
@@ -99,62 +95,40 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
             {
                 timeEdit.setSignificant(false);
                 undoManager.addEdit(timeEdit);
-                //groups.get(groupPointer).addEdit(timeEdit);
             }
             else
             {
                 timeEdit.setSignificant(true);
                 undoManager.addEdit(timeEdit);
-
-                //groups.get(groupPointer).end();
-                //groups.add(new MyCompoundEdit());
-                //groupPointer++;
-                //groups.get(groupPointer).addEdit(timeEdit);
             }
         }
     }
     public void undo() throws CannotUndoException
     {
         previousText = pane.getText();
-        //if(groups.get(groupPointer).isInProgress())
-        //{
-        //    getGroups().get(groupPointer).end();
-        //    //super.addEdit(currentGroup);
-        //}
         edits.get(0).setSignificant(true);
         undoManager.undo();
         timeEdit.setSignificant(true);
-        //groups.get(groupPointer).undo();
-        //groupPointer--;
 
     }
     public void redo() throws CannotUndoException
     {
         edits.get(0).setSignificant(false);
         undoManager.redo();
-        //groupPointer++;
-        //groups.get(groupPointer).redo();
     }
 
     public boolean canUndo(){
         return undoManager.canUndo();
-        //return (groupPointer>=0) && groups.get(groupPointer).canUndo();
-
-        //if(groupPointer<0){
-        //    return false;
-        //}
-        //return groups.get(groupPointer).canUndo();
     }
     public boolean canRedo(){
         return undoManager.canRedo();
-
-        //return (groups.size()>=1) &&
-        //        (groupPointer < groups.size()-1) &&
-        //        (groups.get(groupPointer+1).canRedo());
     }
 
-    String[] getRule(){
-        return Rules;
+    String getRule(){
+        return this.currentRule;
+    }
+    String[] getKeywords(){
+        return keywords;
     }
 
     /**
@@ -162,28 +136,34 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"
      */
     void setRule(String rule){
-        this.rule = new LineBasedRules();
 
-//        switch (rule){
-//            case "Time and Line and Type":
-//                this.rule = new TimeLineTypeBasedRules();
-//                break;
-//            case "Time and Line":
-//                this.rule = new TimeLineBasedRules();
-//                break;
-//            case "Line and Type":
-//                this.rule = new LineTypeBasedRules();
-//                break;
-//            case "Time":
-//                this.rule = new TimeBasedRules();
-//                break;
-//            case "Line":
-//                this.rule = new LineBasedRules();
-//                break;
-//            case "No Rules":
-//                this.rule = new NoGroupBasedRules();
-//                break;
-//        }
+        switch (rule){
+            case "TimeLineType":
+                this.rule = new TimeLineTypeBasedRules();
+                currentRule = "TimeLineType";
+                break;
+            case "TimeLine":
+                this.rule = new TimeLineBasedRules();
+                currentRule = "TimeLine";
+
+                break;
+            case "LineType":
+                this.rule = new LineTypeBasedRules();
+                currentRule = "LineType";
+                break;
+            case "Time":
+                this.rule = new TimeBasedRules();
+                currentRule = "Time";
+                break;
+            case "Line":
+                this.rule = new LineBasedRules();
+                currentRule = "Line";
+                break;
+            case "NoRules":
+                this.rule = new NoGroupBasedRules();
+                currentRule = "NoRules";
+                break;
+        }
     }
 
     Vector<MyCompoundEdit> getGroups(){
@@ -191,6 +171,8 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     }
 
     private void inputKeyTyped(java.awt.event.KeyEvent evt) {
+        StyledDocument doc = pane.getStyledDocument();
+
         String text = "";
         if (evt.getKeyChar()=='('){
             text = pane.getText();
@@ -198,8 +180,21 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
             pane.setText(text);
             pane.setCaretPosition(pane.getText().length()-1);
         }
+//        Style style = pane.addStyle("I'm a Style", null);
+//        StyleConstants.setForeground(style, Color.red);
+//
+//        System.out.println(pane.getDocument().toString());
+//        for(int i = 0; i< this.getKeywords().length; i++){
+//            //if(pane.getDocument())
+//        }
+//
+//        try { doc.insertString(doc.getLength(), "BLAH ",style); }
+//        catch (BadLocationException e){}
+//
+//
+//        try { doc.insertString(doc.getLength(), "BLEH",style); }
+//        catch (BadLocationException e){}
     }
-
 
 
     /**
@@ -279,6 +274,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
             name = "(\\t)";
         }
         previousText = pane.getText();
+
     }
 
     @Override
