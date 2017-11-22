@@ -1,38 +1,42 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.*;
 
-class MyLogger {
-    static private FileHandler fileTxt;
-    static private SimpleFormatter formatterTxt;
+public class MyLogger {
 
-    static private FileHandler fileHTML;
-    static private Formatter formatterHTML;
+    private static final String FILENAME = "~\\Desktop\\Test.txt";
+    private static BufferedWriter bw = null;
+    private static FileWriter fw = null;
 
-    static public void setup() throws IOException {
+    public static void setup() {
 
-        // get the global logger to configure it
-        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-        // suppress the logging output to the console
-        Logger rootLogger = Logger.getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        if (handlers[0] instanceof ConsoleHandler) {
-            rootLogger.removeHandler(handlers[0]);
+
+        try {
+            fw = new FileWriter(FILENAME);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        bw = new BufferedWriter(fw);
 
 
-        logger.setLevel(Level.INFO);
-        fileTxt = new FileHandler("Logging.txt");
-        fileHTML = new FileHandler("Logging.html");
 
-        // create a TXT formatter
-        formatterTxt = new SimpleFormatter();
-        fileTxt.setFormatter(formatterTxt);
-        logger.addHandler(fileTxt);
-
-        // create an HTML formatter
-        formatterHTML = new MyHtmlFormatter();
-        fileHTML.setFormatter(formatterHTML);
-        logger.addHandler(fileHTML);
     }
+    public static void write(String Message){
+
+        try {
+            bw.write(Message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void close(){
+        try {
+            bw.close();
+            fw.close();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
 }

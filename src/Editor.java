@@ -10,13 +10,13 @@ class Editor extends JEditorPane
     //git commit
     private JComboBox box;
     private UndoOrganizer undoOrganizer;
-    private static MyLogger logger;
-    Editor(MyLogger logger)
+    //private static MyLogger logger;
+    Editor()
     {
         super();
-        this.logger = logger;
+        //this.logger = logger;
         //this.box =undoList;
-        undoOrganizer = new UndoOrganizer(this, logger);
+        undoOrganizer = new UndoOrganizer(this);
         //setEditorKit(new StyledEditorKit());
         getDocument().addUndoableEditListener(undoOrganizer);
         getDocument().addDocumentListener(undoOrganizer);

@@ -28,7 +28,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
 
     private long timecreated;
     private boolean isSignificant;
-    MyLogger logger;
+    //MyLogger logger;
 
     /**
      * This creates an edit object with information on where its located when it was created and how it was made
@@ -38,7 +38,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      *             you can get the letter from either super class. This listener is a keystroke listner that saves the document and then a
      *             document listener gets the name, these are located in the UndoOrganizer
      */
-    TimeStampEdits(UndoableEditEvent e, String name, JEditorPane pane, int Mark, int Dot, MyLogger logger)
+    TimeStampEdits(UndoableEditEvent e, String name, JEditorPane pane, int Mark, int Dot)
     {
         docEvents =(AbstractDocument.DefaultDocumentEvent) e.getEdit();
         letter = name;
@@ -50,7 +50,10 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
         dot = Dot;
         isHighlighted = mark != dot;
         this.pane = pane;
-        this.logger = logger;
+
+        MyLogger.write("Time: " + timecreated + "\tType: " + editType);
+
+        //this.logger = logger;
 
         if(editType.equals("addition")){
             try {

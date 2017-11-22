@@ -3,6 +3,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by harrisb on 7/10/17.
@@ -12,10 +14,13 @@ class TextEditor
     public static void main(String[] args)
     {
         //This is a test
-        MyLogger logger = new MyLogger();
+        MyLogger.setup();
+        //MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final Editor app = new Editor(logger);
+        final Editor app = new Editor();
+
+
 
         //app.setTabSize(4);
         EventQueue.invokeLater(new Runnable()
@@ -71,5 +76,12 @@ class TextEditor
                 frame.setVisible(true);
             }
         });
+
+//        frame.addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                MyLogger.close();
+//            }
+//        });
     }
 }
