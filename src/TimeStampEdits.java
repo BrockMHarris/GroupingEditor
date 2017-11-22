@@ -139,13 +139,6 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
         }
         docEvents.undo();
 
-
-        //if(isHighlighted()){
-        //    System.out.println("Highlighted");
-        //    pane.getCaret().setDot(mark);
-        //    pane.getCaret().moveDot(dot);
-        //}
-
     }
 
     public void redo() throws CannotUndoException
@@ -180,14 +173,6 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     {
         isSignificant = significant;
     }
-
-
-
-
-
-
-
-
 
 
     @Override

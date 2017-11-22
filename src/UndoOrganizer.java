@@ -1,8 +1,9 @@
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.text.Element;
+import javax.swing.text.*;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private ArrayList<TimeStampEdits> edits = new ArrayList<TimeStampEdits>();
     private Vector<MyCompoundEdit> groups = new Vector<MyCompoundEdit>();
     private int groupPointer;
-    private JEditorPane pane;
+    private JTextPane pane;
     private JComboBox undoList;
     private String previousText;
     private TimeStampEdits timeEdit;
     private String name;
+
+    static final String[] keywords = {"for", "int", "float", "while", "if", "char", "long", "new", "public", "static", "void", "final"};
 
     private boolean lineChange;
     private boolean timeDiff;
@@ -32,6 +35,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     static String[] Rules = {"Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"};
     private UndoRule rule;
+    private String currentRule;
 
     private int dot;
     private int mark;
@@ -76,7 +80,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
-        timeEdit = new TimeStampEdits(e, name, pane, dot, mark);
+        timeEdit = new TimeStampEdits(e, name, pane, dot, mark,logger);
 
         //for(int i = 0; i < groups.size(); i++){
         //    if(!groups.get(i).canUndo()){
@@ -153,8 +157,11 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         //        (groups.get(groupPointer+1).canRedo());
     }
 
-    String[] getRule(){
-        return Rules;
+    String getRule(){
+        return this.currentRule;
+    }
+    String[] getKeywords(){
+        return keywords;
     }
 
     /**
@@ -162,28 +169,34 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"
      */
     void setRule(String rule){
-        this.rule = new LineBasedRules();
 
-//        switch (rule){
-//            case "Time and Line and Type":
-//                this.rule = new TimeLineTypeBasedRules();
-//                break;
-//            case "Time and Line":
-//                this.rule = new TimeLineBasedRules();
-//                break;
-//            case "Line and Type":
-//                this.rule = new LineTypeBasedRules();
-//                break;
-//            case "Time":
-//                this.rule = new TimeBasedRules();
-//                break;
-//            case "Line":
-//                this.rule = new LineBasedRules();
-//                break;
-//            case "No Rules":
-//                this.rule = new NoGroupBasedRules();
-//                break;
-//        }
+        switch (rule){
+            case "TimeLineType":
+                this.rule = new TimeLineTypeBasedRules();
+                currentRule = "TimeLineType";
+                break;
+            case "TimeLine":
+                this.rule = new TimeLineBasedRules();
+                currentRule = "TimeLine";
+
+                break;
+            case "LineType":
+                this.rule = new LineTypeBasedRules();
+                currentRule = "LineType";
+                break;
+            case "Time":
+                this.rule = new TimeBasedRules();
+                currentRule = "Time";
+                break;
+            case "Line":
+                this.rule = new LineBasedRules();
+                currentRule = "Line";
+                break;
+            case "NoRules":
+                this.rule = new NoGroupBasedRules();
+                currentRule = "NoRules";
+                break;
+        }
     }
 
     Vector<MyCompoundEdit> getGroups(){

@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class LineNumberingTextArea extends JTextArea
 {
-    private JEditorPane textArea;
+    private JTextPane textArea;
 
-    public LineNumberingTextArea(JEditorPane textArea)
+    public LineNumberingTextArea(JTextPane textArea)
     {
         this.textArea = textArea;
         setBackground(Color.LIGHT_GRAY);
