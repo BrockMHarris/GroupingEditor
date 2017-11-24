@@ -48,13 +48,13 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     //static MyLogger logger;
 
     /**
-     * This basically creates a listener class that makes all the decisions. This is the main class. it listens for
+     * This creates a listener class that makes all the decisions. This is the main class. it listens for
      * string edits to the document, changes to the document in general, keystrokes, and movement of the caret
      *
      * @param Pane this is the JEditorPane that houses the text, I need this so i can get the actual readable characters
      *            and set then to the current TimeStampEdit in the case of a deletion
      */
-    UndoOrganizer(JEditorPane Pane)
+    UndoOrganizer(JTextPane Pane)
     {
         pane = Pane;
         //this.undoList = new JComboBox<MyCompoundEdit>(groups);
@@ -72,7 +72,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     /**
      * the listens for changes in the text. it creates one of the rules objects and then asks it whether it should be
-     * with the previous group or on its own. edits are put int CompoundEdits which sucks these CompoundEdits have to be ended
+     * with the previous group or on its own. edits are put int CompoundEdits these CompoundEdits have to be ended
      * before they can be undon, and there is no way to access the individual edits once they are put in there, so there is a separate
      * list
      * @param e and individual undoable edit which is then turned into a CompoundEdit
@@ -80,7 +80,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
-        timeEdit = new TimeStampEdits(e, name, pane, dot, mark,logger);
+        timeEdit = new TimeStampEdits(e, name, pane, dot, mark);
 
         //for(int i = 0; i < groups.size(); i++){
         //    if(!groups.get(i).canUndo()){
