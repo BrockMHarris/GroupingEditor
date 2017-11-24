@@ -6,12 +6,17 @@ import java.awt.*;
 
 /**
  * Created by harrisb on 7/10/17.
+ * This program creates a simple text editor that is able to keep track of more information about the edits that are
+ * happening in the editor.
+ *
+ * its main purpose is to change the fucntionality of the undo button as the user pleases. It allows the user to change
+ * how much is getting undone and redone, based on specific rules such as time between edits. You cna create a new rule
+ * by creating an object that implements UndoRule and adding it to the list of available rules in the undo organizer class
  */
 class TextEditor
 {
     public static void main(String[] args)
     {
-        //This is a test
         MyLogger.setup();
         //MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("UndoOrganizer");
@@ -27,22 +32,26 @@ class TextEditor
                 doc.setDocumentFilter( new NewLineFilter() );
             }
         });
-        //JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
-        //JComboBox ruleSelection = new JComboBox(app.getRule());
-        //ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
-        //ruleSelection.setSelectedIndex(1);
 
-        //UndoListActionListener actionListener = new UndoListActionListener(app, undoList);
-        //undoList.addActionListener(actionListener);
+        //Buttons for history list. Inactive right now
+        //      JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
+        //      JComboBox ruleSelection = new JComboBox(app.getRule());
+        //      ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
+        //      ruleSelection.setSelectedIndex(1);
+
+        //      UndoListActionListener actionListener = new UndoListActionListener(app, undoList);
+        //      undoList.addActionListener(actionListener);
 
         JScrollPane scroll = new JScrollPane(app);
         frame.getContentPane().add(scroll);
 
+
+        //Line numbers for the text
         LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(app);
         scroll.setRowHeaderView(lineNumberingTextArea);
-
         app.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
 
+        //Adds the inportant buttons
         JToolBar tb = new JToolBar();
         JButton btnUndo = new JButton("Undo");
         JButton btnRedo = new JButton("Redo");
@@ -51,13 +60,13 @@ class TextEditor
         btnRedo.addActionListener(new RedoAction(app, btnRedo));
         tb.add(btnUndo);
         tb.add(btnRedo);
-        //tb.add(ruleSelection);
-        //tb.add(undoList);
+        //      tb.add(ruleSelection);
+        //      tb.add(undoList);
 
         btnUndo.setFocusable(false);
         btnRedo.setFocusable(false);
-        //ruleSelection.setFocusable(false);
-        //undoList.setFocusable(false);
+        //      ruleSelection.setFocusable(false);
+        //      undoList.setFocusable(false);
 
         MyBackroundMethod thread = new MyBackroundMethod(btnUndo, btnRedo, app);
         new Thread(thread).start();

@@ -33,7 +33,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private int dotLineNum;
     private int markLineNum;
 
-    static String[] Rules = {"Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"};
+    static final String[] RULES = {"TimeLineType","TimeLine","LineType","Time","Line","NoRules"};
     private UndoRule rule;
     private String currentRule;
 
@@ -65,8 +65,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         undoManager = new UndoManager();
         undoManager.setLimit(-1);
         currentGroup = new MyCompoundEdit();
-//        this.logger = logger;
-
     }
 
 
@@ -199,9 +197,9 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         }
     }
 
-    Vector<MyCompoundEdit> getGroups(){
-        return groups;
-    }
+//    Vector<MyCompoundEdit> getGroups(){
+//        return groups;
+//    }
 
     private void inputKeyTyped(java.awt.event.KeyEvent evt) {
         String text = "";

@@ -1,6 +1,4 @@
- import java.awt.*;
- import javax.swing.*;
- import javax.swing.text.*;
+import javax.swing.text.*;
 
 public class NewLineFilter extends DocumentFilter {
     public void insertString(FilterBypass fb, int offs, String str, AttributeSet a)

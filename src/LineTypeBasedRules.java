@@ -2,9 +2,20 @@ import java.util.ArrayList;
 
 /**
  * Created by harrisb on 7/27/17.
+ * This is a way of grouping the edits so that edits that were made on the same line and are the same type are grouped together.
+ * If the edit is a \n or the line numbers of the edits are different or the type of edit is different from the previous edit
+ *
+ * Type:
+ * Addition - The edit was added to the document
+ * Deletion - The edit was removed from the document
+ *
  */
 class LineTypeBasedRules implements UndoRule
 {
+    /**
+     * @param edits the sequential list of all the edits made in the document
+     * @return true if the last edit should be in a new group. False otherwise
+     */
     @Override
     public boolean withPrevious(ArrayList<TimeStampEdits> edits)
     {

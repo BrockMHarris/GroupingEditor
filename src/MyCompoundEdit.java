@@ -1,12 +1,7 @@
-import javax.swing.undo.CompoundEdit;
-import javax.swing.undo.UndoableEdit;
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Created by harrisb on 7/17/17.
+ * Group of TimeStampedEdits. This grouping is created based on similarities between the edits. they can be undone
+ * all at once.
  */
 class MyCompoundEdit extends javax.swing.undo.CompoundEdit
 {
@@ -15,6 +10,10 @@ class MyCompoundEdit extends javax.swing.undo.CompoundEdit
         super();
     }
 
+    /**
+     * Checks that all the edits in the group can be undone
+     * @return true if they all cna be undone, false otherwise.
+     */
     @Override
     public boolean canUndo(){
         for(int i = 0; i<super.edits.size();i++)
@@ -30,6 +29,10 @@ class MyCompoundEdit extends javax.swing.undo.CompoundEdit
         return true;
     }
 
+    /**
+     * Checks that all the edits in the group can be redone
+     * @return true if they all cna be redone, false otherwise.
+     */
     @Override
     public boolean canRedo(){
         for(int i = 0; i<super.edits.size();i++)
@@ -43,6 +46,11 @@ class MyCompoundEdit extends javax.swing.undo.CompoundEdit
         return true;
     }
 
+    /**
+     * @return string represent of the group of edits. in the format {a;h}, {a;e}, {a;l}, {a;l}, {a;o} where the first
+     * part is the Type of edit  a: addition  d: deletion
+     * the second part is the charactor that is being edited.
+     */
     @Override
     public String toString()
     {
