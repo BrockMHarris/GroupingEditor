@@ -11,6 +11,9 @@ import java.util.Vector;
 
 /**
  * Created by harrisb on 7/10/17.
+ *
+ * This class controls the groups of the edits. It determines which edits are put into their own groups. It keeps track of all
+ * the edits and undoes the edits if necessary.
  */
 class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyListener, CaretListener,  DocumentListener
 {
@@ -48,6 +51,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     //static MyLogger logger;
 
     /**
+     * Contructor
      * This creates a listener class that makes all the decisions. This is the main class. it listens for
      * string edits to the document, changes to the document in general, keystrokes, and movement of the caret
      *
@@ -78,22 +82,13 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
-        timeEdit = new TimeStampEdits(e, name, pane, dot, mark);
-
-        //for(int i = 0; i < groups.size(); i++){
-        //    if(!groups.get(i).canUndo()){
-        //        groups.get(i).die();
-        //    }
-        //}
+        timeEdit = new TimeStampEdits(e, name, dot, mark);
         edits.add(timeEdit);
         isHighliting = false;
         if (edits.size() <= 1)
         {
             timeEdit.setSignificant(true);
             undoManager.addEdit(timeEdit);
-            //groups.add(new MyCompoundEdit());
-            //groupPointer = groups.size() - 1;
-            //groups.get(groups.size()-1).addEdit(timeEdit);
         }
         else
         {
@@ -101,69 +96,69 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
             {
                 timeEdit.setSignificant(false);
                 undoManager.addEdit(timeEdit);
-                //groups.get(groupPointer).addEdit(timeEdit);
             }
             else
             {
                 timeEdit.setSignificant(true);
                 undoManager.addEdit(timeEdit);
-
-                //groups.get(groupPointer).end();
-                //groups.add(new MyCompoundEdit());
-                //groupPointer++;
-                //groups.get(groupPointer).addEdit(timeEdit);
             }
         }
     }
+
+    /**
+     * Undoes the next available group
+     * @throws CannotUndoException
+     */
     public void undo() throws CannotUndoException
     {
         previousText = pane.getText();
-        //if(groups.get(groupPointer).isInProgress())
-        //{
-        //    getGroups().get(groupPointer).end();
-        //    //super.addEdit(currentGroup);
-        //}
         edits.get(0).setSignificant(true);
         undoManager.undo();
         timeEdit.setSignificant(true);
-        //groups.get(groupPointer).undo();
-        //groupPointer--;
 
     }
+
+    /**
+     * Redoes next available group
+     * @throws CannotUndoException
+     */
     public void redo() throws CannotUndoException
     {
         edits.get(0).setSignificant(false);
         undoManager.redo();
-        //groupPointer++;
-        //groups.get(groupPointer).redo();
     }
 
+    /**
+     * @return true if there is a group that can be undone. false otherwise
+     */
     public boolean canUndo(){
         return undoManager.canUndo();
-        //return (groupPointer>=0) && groups.get(groupPointer).canUndo();
-
-        //if(groupPointer<0){
-        //    return false;
-        //}
-        //return groups.get(groupPointer).canUndo();
     }
+
+    /**
+     * @return True if there is a group that can be redone, false otherwise
+     */
     public boolean canRedo(){
         return undoManager.canRedo();
-
-        //return (groups.size()>=1) &&
-        //        (groupPointer < groups.size()-1) &&
-        //        (groups.get(groupPointer+1).canRedo());
     }
 
+    /**
+     * @return rule that is currently being applied
+     */
     String getRule(){
         return this.currentRule;
     }
+
+    /**
+     * Returns words used for syntax color
+     */
     String[] getKeywords(){
         return keywords;
     }
 
     /**
-     * You only have a certain number of strings, default is TimeLineBasedRules
+     * sets the rule that will be used for grouping
+     * only have a certain number of strings, default is TimeLineBasedRules
      * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"
      */
     void setRule(String rule){
@@ -201,6 +196,10 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 //        return groups;
 //    }
 
+    /**
+     * Automatically closes opening brackets
+     * @param evt edit event
+     */
     private void inputKeyTyped(java.awt.event.KeyEvent evt) {
         String text = "";
         if (evt.getKeyChar()=='('){
@@ -214,8 +213,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
 
     /**
-     * This is the document listener i use removeUpdate to see what sections were removed so i can check which letters
-     * were there and apply a name to the right timeStamped Object, these listeners are triggered before the undoable edit listener above
+     * Required method for Document listener. unused
      * @param documentEvent and change to the document
      */
     @Override
@@ -224,6 +222,11 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     }
 
+    /**
+     * what sections were removed so i can check which letters
+     * were there and apply a name to the right timeStamped Object
+     * @param e event triggered when something is deleted for the document
+     */
     @Override
     public void removeUpdate(DocumentEvent e)
     {
@@ -240,6 +243,10 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         }
     }
 
+    /**
+     * Required method for Document listener. unused
+     * @param documentEvent change to the document
+     */
     @Override
     public void changedUpdate(DocumentEvent documentEvent) {
 
@@ -269,7 +276,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * These are the keystroke listeners, these are the first to be updated, key typed only looks for printable characters
      * such as number and letters, i am storing the previous string for each key even so that i can know what was deleted
      *
-     * key pressed and key released track all keys
      * @param keyEvent The key that is pressed it set as the letter in the undoable event
      */
     @Override
@@ -279,10 +285,14 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     }
 
+    /**
+     * First listener to update
+     * checks if the key is a new line or tab character and names the timestamp appropriately
+     * @param keyEvent key is pressed down
+     */
     @Override
     public void keyPressed(KeyEvent keyEvent)
     {
-        //System.out.print(keyEvent.getExtendedKeyCode()+ ": ");
         if(keyEvent.getExtendedKeyCode() == NEWLINEKEYCODE){
             name = "(\\n)";
         }
@@ -291,7 +301,10 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         }
         previousText = pane.getText();
     }
-
+    /**
+     * Required method for key listener. unused
+     * @param keyEvent change to the document
+     */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
     }

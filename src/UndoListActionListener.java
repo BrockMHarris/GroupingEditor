@@ -4,6 +4,9 @@ import java.awt.event.*;
 
 /**
  * Created by harrisb on 7/21/17.
+ * Not currently used
+ *
+ * Listener for the undo list that displays the edits to the area. Can be used to undo multiple groups at once
  */
 class UndoListActionListener implements ActionListener
 {
@@ -11,6 +14,12 @@ class UndoListActionListener implements ActionListener
     private Editor app;
     private static int pointer;
     private boolean first;
+
+    /**
+     * Constructor
+     * @param app The JTextPane that needs to be edited
+     * @param undoList The dropdown list that is being listened to.
+     */
     UndoListActionListener(Editor app, JComboBox undoList)
     {
         this.app = app;
@@ -19,6 +28,10 @@ class UndoListActionListener implements ActionListener
         first = true;
     }
 
+    /**
+     * When an element in the list is clicked it undoes every group up until the clicked group
+     * @param actionEvent undo list event
+     */
     @Override
     public void actionPerformed(ActionEvent actionEvent)
     {

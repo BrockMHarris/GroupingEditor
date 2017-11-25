@@ -1,14 +1,15 @@
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.*;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CompoundEdit;
 import javax.swing.undo.UndoableEdit;
-import java.awt.*;
 
 /**
  * Created by harrisb on 7/10/17.
+ * This is a modification of the undoable edit class. It keeps track of when the edit is created so that we can compare them.
+ * It also keeps track of where it was inserted, what type of edit it is, whether is was highlighted when the edit occurred
+ * and how long it is
  */
 class TimeStampEdits extends CompoundEdit implements UndoableEdit
 {
@@ -24,11 +25,10 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     private int dot;
     private int mark;
 
-    private JEditorPane pane;
+    //private JEditorPane pane;
 
     private long timecreated;
     private boolean isSignificant;
-    //MyLogger logger;
 
     /**
      * This creates an edit object with information on where its located when it was created and how it was made
@@ -37,8 +37,11 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      * @param name this the human readable for of the edit, it needs to be passed in from a seperate listener because for some reason
      *             you can get the letter from either super class. This listener is a keystroke listner that saves the document and then a
      *             document listener gets the name, these are located in the UndoOrganizer
+     * @param Mark the make is the first point of a highlight. The TimeStampEdit uses this to detemrine if it was created
+     *             or deleted while bieng highlighed
+     * @param Dot This is the last point of a highlight
      */
-    TimeStampEdits(UndoableEditEvent e, String name, JEditorPane pane, int Mark, int Dot)
+    TimeStampEdits(UndoableEditEvent e, String name, int Mark, int Dot)
     {
         docEvents =(AbstractDocument.DefaultDocumentEvent) e.getEdit();
         letter = name;
@@ -49,7 +52,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
         mark = Mark;
         dot = Dot;
         isHighlighted = mark != dot;
-        this.pane = pane;
+        //this.pane = pane;
 
         MyLogger.write("Time: " + timecreated + "\tType: " + editType);
 
@@ -62,63 +65,100 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
                 e1.printStackTrace();
             }
         }
-        // TODO fix line numberson newline so that newlines are counted as previous lines
+        // TODO fix line numbers on newline so that newlines are counted as previous lines
 
         int caretPosition = docEvents.getDocument().getLength();
         Element root = docEvents.getDocument().getDefaultRootElement();
         lineNum = root.getElementIndex(caretPosition);
     }
 
+    /**
+     * This allows the user to change the last point of a higlighed group held by this time stamped edit
+     * @param dot the index of the last highlight point in the string of the text.
+     */
     void setDot(int dot){
         this.dot = dot;
     }
+    /**
+     * This allows the user to change the first point of a higlighed group held by this time stamped edit
+     * @param mark the index of the first highlight point in the string of the text.
+     */
     void setMark(int mark){
         this.mark = mark;
     }
+
+    /**
+     * @return the index of the last point of highlight stored by this edit
+     */
     int getDot(){
         return dot;
     }
 
+    /**
+     * @return the index of the first point of highlight stored by this edit
+     */
     int getMark()
     {
         return mark;
     }
 
+    /**
+     * @return line number this edit is located on, found by the number of \n before this edit in the text
+     */
     int getLineNumber()
     {
         return lineNum;
     }
 
+    /**
+     * @return The edit that is being saved as the timeStampEdit
+     */
     AbstractDocument.DefaultDocumentEvent getDocEvents(){
         return docEvents;
     }
 
+    /**
+     * @return Index of the beginning of the edit
+     */
     int getStart()
     {
         return start;
     }
 
+    /**
+     * @return String representation of the edit. This is used for storing the letter of deletion edits, this cannot be done the
+     * same way as additions
+     */
     String getLetter(){
         return letter;
     }
 
+    /**
+     * @return String represention of the edit. Only works for addition events
+     */
     String getText(){
         return text;
     }
 
+    /**
+     * @return Length of the edit
+     */
     int getLength()
     {
         return length;
     }
-    void setHighlight(boolean isHighlighted){
-        this.isHighlighted = isHighlighted;
-        //System.out.println("setIT");
-    }
+
+    /**
+     * @return true if the edit was created while it was highlighted. false otherwise
+     */
     boolean isHighlighted(){
 
         return isHighlighted;
     }
 
+    /**
+     * @return Time relative to the start of the program that the edit was created
+     */
     long getTimecreated()
     {
         return timecreated;
@@ -132,15 +172,22 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
         return editType;
     }
 
+    /**
+     * Undo this edit
+     * @throws CannotUndoException
+     */
     public void undo()throws CannotUndoException
     {
         if (!canUndo()){
             throw new CannotUndoException();
         }
         docEvents.undo();
-
     }
 
+    /**
+     * Redo this edit
+     * @throws CannotUndoException
+     */
     public void redo() throws CannotUndoException
     {
         if (!canRedo()){
@@ -149,67 +196,108 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
         docEvents.redo();
     }
 
+    /**
+     * @return True if this edit can be undone, false otherwise.
+     */
     public boolean canUndo()
     {
         return docEvents.canUndo();
     }
+
+    /**
+     * @return True if this edit can be redone, false otherwise.
+     */
     public boolean canRedo()
     {
         return docEvents.canRedo();
     }
 
+    /**
+     * @return string representation of the edit it in fore a: t or d: t where a is addition and d is deletion, and t is
+     * charactor of the edit
+     */
     public String toString()
     {
         return editType.charAt(0) + ": " + letter;
     }
 
+    /**
+     * Used by undoManager to determine if a new group should be made
+     * @return true if is significant, false otherwise
+     */
     @Override
     public boolean isSignificant()
     {
         return isSignificant;
     }
 
+    /**
+     * Used by undoManager to determine if a new group should be made
+     * @param significant Sets the significance of the edit.
+     */
     public void setSignificant(boolean significant)
     {
         isSignificant = significant;
     }
 
 
+    /**
+     * required method for undoable edit, but not necesary. Does not do anything
+     */
     @Override
     public void die() {
 
     }
 
+    /**
+     * required method for undoable edit, but not necesary. Does not do anything
+     */
     @Override
     public boolean addEdit(UndoableEdit undoableEdit)
     {
         return false;
     }
 
+    /**
+     * required method for undoable edit, but not necesary. returns false
+     */
     @Override
     public boolean replaceEdit(UndoableEdit undoableEdit)
     {
         return false;
     }
 
+    /**
+     * required method for undoable edit, but not necesary. returns null
+     */
     @Override
     public String getPresentationName()
     {
         return null;
     }
 
+    /**
+     * required method for undoable edit, but not necesary. returns null
+     */
     @Override
     public String getUndoPresentationName()
     {
         return null;
     }
 
+    /**
+     * required method for undoable edit, but not necesary. returns null
+     */
     @Override
     public String getRedoPresentationName()
     {
         return null;
     }
 
+    /**
+     * Set the charactor this edit holds
+     * @param name charactor to be held
+     */
     public void setName(String name)
     {
         letter = name;
