@@ -7,16 +7,16 @@ import java.io.IOException;
  */
 public class MyLogger {
 
-    private static final String FILENAME = "~\\Desktop\\Test.txt";
+    //private String filename = "~\\Test.txt";
     private static BufferedWriter bw = null;
     private static FileWriter fw = null;
 
     /**
      * Creates a new to hold all the log files
      */
-    public static void setup() {
+    public static void setup(String fileLoc) {
         try {
-            fw = new FileWriter(FILENAME);
+            fw = new FileWriter(fileLoc + "\\Log.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }

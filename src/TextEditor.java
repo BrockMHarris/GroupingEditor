@@ -17,12 +17,12 @@ class TextEditor
 {
     public static void main(String[] args)
     {
-        MyLogger.setup();
+        MyLogger.setup(args[0]);
         //MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Editor app = new Editor();
-        app.setRule(args[0]);
+        app.setRule(args[1]);
         //app.setTabSize(4);
         EventQueue.invokeLater(new Runnable()
         {
@@ -55,11 +55,14 @@ class TextEditor
         JToolBar tb = new JToolBar();
         JButton btnUndo = new JButton("Undo");
         JButton btnRedo = new JButton("Redo");
+        JButton btnSave = new JButton("Save");
 
         btnUndo.addActionListener(new UndoAction(app, btnUndo));
         btnRedo.addActionListener(new RedoAction(app, btnRedo));
+        btnSave.addActionListener(new saveBtnAction(app, btnSave,args[0]));
         tb.add(btnUndo);
         tb.add(btnRedo);
+        tb.add(btnSave);
         //      tb.add(ruleSelection);
         //      tb.add(undoList);
 

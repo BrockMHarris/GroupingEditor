@@ -35,8 +35,6 @@ class UndoListActionListener implements ActionListener
     @Override
     public void actionPerformed(ActionEvent actionEvent)
     {
-        //undoList.setSelectedIndex(0);
-        //undoList.add(new )
         Object toRemove = undoList.getItemAt(undoList.getItemCount()-1);
         undoList.removeItem(toRemove);
         undoList.addItem(toRemove);
