@@ -1,15 +1,15 @@
 package Editor.Rules;
 
-import Editor.*;
+import Editor.TimeStampEdits;
 
-
+import java.util.ArrayList;
 
 /**
  * Created by harrisb on 7/19/17.
  * This is a way of grouping the edits so that edits that were made within a given time of each other are grouped together
  * if they are on different lines they are automatically in separate groups
  */
-public class TimeLineBasedRules implements Editor.UndoRule
+public class TimeLineBasedRules implements UndoRule
 {
     private static final int threshold = 900;
 
