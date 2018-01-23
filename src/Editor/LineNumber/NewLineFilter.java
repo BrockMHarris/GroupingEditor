@@ -1,3 +1,7 @@
+package Editor.LineNumber;
+
+import Editor.Editor;
+
 import javax.swing.text.*;
 
 public class NewLineFilter extends DocumentFilter {

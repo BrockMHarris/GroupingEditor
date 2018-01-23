@@ -1,3 +1,7 @@
+package Editor.LineNumber;
+
+import Editor.Editor;
+
 import javax.swing.*;
 import javax.swing.text.Element;
 import java.awt.*;

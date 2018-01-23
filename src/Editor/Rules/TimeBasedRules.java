@@ -1,3 +1,7 @@
+package Editor.Rules;
+
+
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +17,7 @@ class TimeBasedRules implements UndoRule
      * @return true if the last edit should be in a new group. False otherwise
      */
     @Override
-    public boolean withPrevious(ArrayList<TimeStampEdits> edits)
+    public boolean withPrevious(ArrayList<Editor.TimeStampEdits> edits)
     {
         boolean timeDiff = (edits.get(edits.size()-1).getTimecreated() - edits.get(edits.size()-2).getTimecreated()) > threshold;
 

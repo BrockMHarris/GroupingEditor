@@ -1,5 +1,8 @@
+package Editor.Button;
+
+import Editor.Editor;
+
 import javax.swing.*;
-import javax.swing.undo.CompoundEdit;
 import java.awt.event.*;
 
 /**
@@ -8,7 +11,7 @@ import java.awt.event.*;
  *
  * Listener for the undo list that displays the edits to the area. Can be used to undo multiple groups at once
  */
-class UndoListActionListener implements ActionListener
+public class UndoListActionListener implements ActionListener
 {
     private JComboBox undoList;
     private Editor app;

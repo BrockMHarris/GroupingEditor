@@ -1,3 +1,5 @@
+package Editor;
+
 import javax.swing.*;
 
 /**
@@ -5,7 +7,7 @@ import javax.swing.*;
  * Thread to watch if the buttons are pressible independent of main proccess, so that the buttons become inactive as soon
  * as they can no longer be used
  */
-class MyBackroundMethod extends Thread
+public class MyBackroundMethod extends Thread
 {
     private JButton undo;
     private JButton redo;

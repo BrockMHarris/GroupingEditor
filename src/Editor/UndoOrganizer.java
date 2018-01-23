@@ -1,9 +1,12 @@
+package Editor;
+
+import Editor.Rules.*;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     private MyCompoundEdit currentGroup;
     private UndoManager undoManager;
-    //static MyLogger logger;
+    //static Editor.MyLogger logger;
 
     /**
      * Contructor
@@ -61,7 +64,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     UndoOrganizer(JTextPane Pane)
     {
         pane = Pane;
-        //this.undoList = new JComboBox<MyCompoundEdit>(groups);
+        //this.undoList = new JComboBox<Editor.MyCompoundEdit>(groups);
         pane.addKeyListener(this);
         groupPointer = -1;
         rule = new TimeLineBasedRules();
@@ -158,8 +161,8 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     /**
      * sets the rule that will be used for grouping
-     * only have a certain number of strings, default is TimeLineBasedRules
-     * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Rules"
+     * only have a certain number of strings, default is Editor.Rules.TimeLineBasedRules
+     * @param rule "Time and Line and Type","Time and Line","Line and Type","Time","Line","No Editor.Rules"
      */
     void setRule(String rule){
 
@@ -192,7 +195,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         }
     }
 
-//    Vector<MyCompoundEdit> getGroups(){
+//    Vector<Editor.MyCompoundEdit> getGroups(){
 //        return groups;
 //    }
 

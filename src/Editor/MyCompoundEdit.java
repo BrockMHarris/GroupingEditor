@@ -1,9 +1,11 @@
+package Editor;
+
 /**
  * Created by harrisb on 7/17/17.
  * Group of TimeStampedEdits. This grouping is created based on similarities between the edits. they can be undone
  * all at once.
  */
-class MyCompoundEdit extends javax.swing.undo.CompoundEdit
+public class MyCompoundEdit extends javax.swing.undo.CompoundEdit
 {
     public MyCompoundEdit()
     {

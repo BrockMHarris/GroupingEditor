@@ -1,4 +1,5 @@
-import javax.swing.*;
+package Editor;
+
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.*;
 import javax.swing.undo.CannotUndoException;
@@ -11,7 +12,7 @@ import javax.swing.undo.UndoableEdit;
  * It also keeps track of where it was inserted, what type of edit it is, whether is was highlighted when the edit occurred
  * and how long it is
  */
-class TimeStampEdits extends CompoundEdit implements UndoableEdit
+public class TimeStampEdits extends CompoundEdit implements UndoableEdit
 {
 
     private final AbstractDocument.DefaultDocumentEvent docEvents;
@@ -36,7 +37,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      * @param e this is an undoable edit even, this could be an insertion or deletion of a charactor or a string of text
      * @param name this the human readable for of the edit, it needs to be passed in from a seperate listener because for some reason
      *             you can get the letter from either super class. This listener is a keystroke listner that saves the document and then a
-     *             document listener gets the name, these are located in the UndoOrganizer
+     *             document listener gets the name, these are located in the Editor.UndoOrganizer
      * @param Mark the make is the first point of a highlight. The TimeStampEdit uses this to detemrine if it was created
      *             or deleted while bieng highlighed
      * @param Dot This is the last point of a highlight
@@ -76,28 +77,28 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      * This allows the user to change the last point of a higlighed group held by this time stamped edit
      * @param dot the index of the last highlight point in the string of the text.
      */
-    void setDot(int dot){
+    public void setDot(int dot){
         this.dot = dot;
     }
     /**
      * This allows the user to change the first point of a higlighed group held by this time stamped edit
      * @param mark the index of the first highlight point in the string of the text.
      */
-    void setMark(int mark){
+    public void setMark(int mark){
         this.mark = mark;
     }
 
     /**
      * @return the index of the last point of highlight stored by this edit
      */
-    int getDot(){
+    public int getDot(){
         return dot;
     }
 
     /**
      * @return the index of the first point of highlight stored by this edit
      */
-    int getMark()
+    public int getMark()
     {
         return mark;
     }
@@ -105,7 +106,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     /**
      * @return line number this edit is located on, found by the number of \n before this edit in the text
      */
-    int getLineNumber()
+    public int getLineNumber()
     {
         return lineNum;
     }
@@ -113,14 +114,14 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     /**
      * @return The edit that is being saved as the timeStampEdit
      */
-    AbstractDocument.DefaultDocumentEvent getDocEvents(){
+    public AbstractDocument.DefaultDocumentEvent getDocEvents(){
         return docEvents;
     }
 
     /**
      * @return Index of the beginning of the edit
      */
-    int getStart()
+    public int getStart()
     {
         return start;
     }
@@ -129,21 +130,21 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
      * @return String representation of the edit. This is used for storing the letter of deletion edits, this cannot be done the
      * same way as additions
      */
-    String getLetter(){
+    public String getLetter(){
         return letter;
     }
 
     /**
      * @return String represention of the edit. Only works for addition events
      */
-    String getText(){
+    public String getText(){
         return text;
     }
 
     /**
      * @return Length of the edit
      */
-    int getLength()
+    public int getLength()
     {
         return length;
     }
@@ -151,7 +152,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     /**
      * @return true if the edit was created while it was highlighted. false otherwise
      */
-    boolean isHighlighted(){
+    public boolean isHighlighted(){
 
         return isHighlighted;
     }
@@ -159,7 +160,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     /**
      * @return Time relative to the start of the program that the edit was created
      */
-    long getTimecreated()
+    public long getTimecreated()
     {
         return timecreated;
     }
@@ -167,7 +168,7 @@ class TimeStampEdits extends CompoundEdit implements UndoableEdit
     /**
      * @return either "addition" or "deletion"
      */
-    String getEditType()
+    public String getEditType()
     {
         return editType;
     }

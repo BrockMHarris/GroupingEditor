@@ -1,7 +1,9 @@
+package Editor;
+
+import Editor.Button.keyBindings;
+
 import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
-import java.awt.event.ActionEvent;
-import java.util.Vector;
+
 
 /**
  * Created by harrisb on 7/10/17.
@@ -10,7 +12,7 @@ import java.util.Vector;
  *
  * The iditor type used is JTextPane because it allows for different colored text within one document.
  */
-class Editor extends JTextPane
+public class Editor extends JTextPane
 {
     private UndoOrganizer undoOrganizer;
 
@@ -30,7 +32,7 @@ class Editor extends JTextPane
     /**
      * This methods allows for outside classes such as buttons in the window to undo a group of edits
      */
-    void undo()
+    public void undo()
     {
         undoOrganizer.undo();
     }
@@ -38,7 +40,7 @@ class Editor extends JTextPane
     /**
      * This methods allows for outside classes such as buttons in the window to redo a group of edits
      */
-    void redo()
+    public void redo()
     {
         undoOrganizer.redo();
     }
@@ -46,7 +48,7 @@ class Editor extends JTextPane
     /**
      * @return Returns true if there is a group of edits that is available to be undone. false otherwise
      */
-    boolean canUndo()
+    public boolean canUndo()
     {
         return undoOrganizer.canUndo();
     }
@@ -54,7 +56,7 @@ class Editor extends JTextPane
     /**
      * @return Returns true if there is a group of edits that is available to be undone. false otherwise
      */
-    boolean canRedo()
+    public boolean canRedo()
     {
         return undoOrganizer.canRedo();
     }
@@ -63,17 +65,17 @@ class Editor extends JTextPane
      * Changes the desired rule for grouping of edits. which can be seen with the getRule() method
      * @param rule the desired rule
      */
-    void setRule(String rule){
+    public void setRule(String rule){
         undoOrganizer.setRule(rule);
     }
 
     /**
      * @return The list of rules for grouping of edits
      */
-    String getRule(){
+    public String getRule(){
         return undoOrganizer.getRule();
     }
-//    Vector<MyCompoundEdit> getGroups(){
+//    Vector<Editor.MyCompoundEdit> getGroups(){
 //        return undoOrganizer.getGroups();
 //    }
 }

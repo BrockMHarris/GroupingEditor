@@ -1,3 +1,7 @@
+package Editor.Rules;
+
+import Editor.TimeStampEdits;
+
 import java.util.ArrayList;
 
 /**
@@ -5,7 +9,7 @@ import java.util.ArrayList;
  * This is a way of grouping the edits so that edits that were made on the same line are grouped together.
  * If the edit is a \n or the line numbers of the edits are different
  */
-class LineBasedRules implements UndoRule
+public class LineBasedRules implements UndoRule
 {
     /**
      * @param edits the sequential lsit of all the edits made in the document

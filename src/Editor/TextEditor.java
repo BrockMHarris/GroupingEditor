@@ -1,6 +1,12 @@
+package Editor;
+import Editor.Button.*;
+
+import Editor.Button.*;
+import Editor.LineNumber.LineNumberListener;
+import Editor.LineNumber.LineNumberingTextArea;
+import Editor.LineNumber.NewLineFilter;
+
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
 
@@ -11,16 +17,22 @@ import java.awt.*;
  *
  * its main purpose is to change the fucntionality of the undo button as the user pleases. It allows the user to change
  * how much is getting undone and redone, based on specific rules such as time between edits. You cna create a new rule
- * by creating an object that implements UndoRule and adding it to the list of available rules in the undo organizer class
+ * by creating an object that implements Editor.Rules.UndoRule and adding it to the list of available rules in the undo organizer class
  */
-class TextEditor
+public class TextEditor
 {
     public static void main(String[] args)
     {
         MyLogger.setup(args[0]);
-        //MyLogger.write("Rule: " + args[0]);
-        JFrame frame = new JFrame("UndoOrganizer");
+        //Editor.MyLogger.write("Rule: " + args[0]);
+        JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel sidePanel = new JPanel();
+        sidePanel.setBackground(Color.gray);
+        frame.getContentPane().add(sidePanel, BorderLayout.LINE_END);
+
+
+
         final Editor app = new Editor();
         app.setRule(args[1]);
         //app.setTabSize(4);
@@ -34,12 +46,12 @@ class TextEditor
         });
 
         //Buttons for history list. Inactive right now
-        //      JComboBox<MyCompoundEdit> undoList = new JComboBox<MyCompoundEdit>(app.getGroups());
+        //      JComboBox<Editor.MyCompoundEdit> undoList = new JComboBox<Editor.MyCompoundEdit>(app.getGroups());
         //      JComboBox ruleSelection = new JComboBox(app.getRule());
-        //      ruleSelection.addActionListener(new RulesActionListener(app, ruleSelection));
+        //      ruleSelection.addActionListener(new Editor.Button.RulesActionListener(app, ruleSelection));
         //      ruleSelection.setSelectedIndex(1);
 
-        //      UndoListActionListener actionListener = new UndoListActionListener(app, undoList);
+        //      Editor.Button.UndoListActionListener actionListener = new Editor.Button.UndoListActionListener(app, undoList);
         //      undoList.addActionListener(actionListener);
 
         JScrollPane scroll = new JScrollPane(app);
@@ -56,13 +68,19 @@ class TextEditor
         JButton btnUndo = new JButton("Undo");
         JButton btnRedo = new JButton("Redo");
         JButton btnSave = new JButton("Save");
+        JButton btnQuestion = new JButton("Questions");
+        JButton btnDone = new JButton("Done");
 
         btnUndo.addActionListener(new UndoAction(app, btnUndo));
         btnRedo.addActionListener(new RedoAction(app, btnRedo));
         btnSave.addActionListener(new saveBtnAction(app, btnSave,args[0]));
+        btnQuestion.addActionListener(new questionAction(app, btnQuestion));
+        btnDone.addActionListener(new doneAction(app, btnDone));
         tb.add(btnUndo);
         tb.add(btnRedo);
         tb.add(btnSave);
+        sidePanel.add(btnQuestion, BorderLayout.NORTH);
+        sidePanel.add(btnDone, BorderLayout.SOUTH);
         //      tb.add(ruleSelection);
         //      tb.add(undoList);
 
@@ -75,14 +93,8 @@ class TextEditor
         new Thread(thread).start();
 
         frame.getContentPane().add(tb, BorderLayout.NORTH);
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                frame.setSize(800, 400);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
+        frame.setSize(800, 400);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }
