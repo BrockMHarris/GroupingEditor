@@ -27,7 +27,7 @@ public class TextEditor
         //Editor.MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel sidePanel = new JPanel();
+        JPanel sidePanel = new JPanel(new GridLayout(2,1,0,0));
         sidePanel.setBackground(Color.gray);
         frame.getContentPane().add(sidePanel, BorderLayout.LINE_END);
 
@@ -68,7 +68,7 @@ public class TextEditor
         JButton btnUndo = new JButton("Undo");
         JButton btnRedo = new JButton("Redo");
         JButton btnSave = new JButton("Save");
-        JButton btnQuestion = new JButton("Questions");
+        JToggleButton btnQuestion = new JToggleButton("Questions");
         JButton btnDone = new JButton("Done");
 
         btnUndo.addActionListener(new UndoAction(app, btnUndo));
@@ -79,8 +79,8 @@ public class TextEditor
         tb.add(btnUndo);
         tb.add(btnRedo);
         tb.add(btnSave);
-        sidePanel.add(btnQuestion, BorderLayout.NORTH);
-        sidePanel.add(btnDone, BorderLayout.SOUTH);
+        sidePanel.add(btnQuestion);
+        sidePanel.add(btnDone);
         //      tb.add(ruleSelection);
         //      tb.add(undoList);
 

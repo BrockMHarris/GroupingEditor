@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Deletion - The edit was removed from the document
  *
  */
-class TimeLineTypeBasedRules implements UndoRule
+public class TimeLineTypeBasedRules implements UndoRule
 {
 
     private static final int threshold = 900;

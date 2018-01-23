@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by harrisb on 7/19/17.
  * This is a way of grouping the edits so that edits that were made whithin a givin time of each other are grouped together
  */
-class TimeBasedRules implements UndoRule
+public class TimeBasedRules implements UndoRule
 {
     private static final int threshold = 900;
 
