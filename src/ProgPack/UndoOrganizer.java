@@ -207,10 +207,43 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private void inputKeyTyped(java.awt.event.KeyEvent evt) {
         String text = "";
         if (evt.getKeyChar()=='('){
+            int pos  = pane.getCaretPosition();
             text = pane.getText();
-            text = text + ")";
+            text = text.substring(0, pos) + ")" + text.substring(pos, text.length());
             pane.setText(text);
-            pane.setCaretPosition(pane.getText().length()-1);
+            pane.setCaretPosition(pos);
+        }
+
+        if (evt.getKeyChar()=='\"'){
+            int pos  = pane.getCaretPosition();
+            text = pane.getText();
+            text = text.substring(0, pos) + "\"" + text.substring(pos, text.length());
+            pane.setText(text);
+            pane.setCaretPosition(pos);
+        }
+
+        if (evt.getKeyChar()=='{'){
+            int pos  = pane.getCaretPosition();
+            text = pane.getText();
+            text = text.substring(0, pos) + "}" + text.substring(pos, text.length());
+            pane.setText(text);
+            pane.setCaretPosition(pos);
+        }
+
+        if (evt.getKeyChar()=='\''){
+            int pos  = pane.getCaretPosition();
+            text = pane.getText();
+            text = text.substring(0, pos) + "\'" + text.substring(pos, text.length());
+            pane.setText(text);
+            pane.setCaretPosition(pos);
+        }
+
+        if (evt.getKeyChar()=='['){
+            int pos  = pane.getCaretPosition();
+            text = pane.getText();
+            text = text.substring(0, pos) + "]" + text.substring(pos, text.length());
+            pane.setText(text);
+            pane.setCaretPosition(pos);
         }
     }
 

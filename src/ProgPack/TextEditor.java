@@ -50,13 +50,46 @@ public class TextEditor
         JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
         JPanel sidePanel = new JPanel(new GridLayout(2,1,0,0));
         sidePanel.setBackground(Color.gray);
-        frame.getContentPane().add(sidePanel, BorderLayout.LINE_END);
+
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(sidePanel, BorderLayout.EAST);
 
         JPanel editor = new JPanel();
-        final Editor app = new Editor(timer);
-        editor.add(app, BorderLayout.CENTER);
+        editor.setLayout(new BorderLayout());
+            Editor app = new Editor(timer);
+            editor.add(app, BorderLayout.CENTER);
+
+        JPanel outputPanel = new JPanel();
+        outputPanel.setLayout(new BorderLayout());
+            JTextArea output = new JTextArea();
+            outputPanel.add(output, BorderLayout.CENTER);
+
+        JSplitPane mainPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, editor,outputPanel);
+//        mainPanel.add(editor);
+//        mainPanel.add(outputPanel);
+
+
+        frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+        mainPanel.setOneTouchExpandable(true);
+
+        //Provide minimum sizes for the two components in the split pane
+        Dimension minimumSize = new Dimension(100, 50);
+        outputPanel.setMinimumSize(minimumSize);
+        editor.setMinimumSize(minimumSize);
+
+        //Set the initial location and size of the divider
+        mainPanel.setDividerLocation(150);
+        mainPanel.setDividerSize(10);
+
+        //Provide a preferred size for the split pane
+        mainPanel.setPreferredSize(new Dimension(400, 200));
+//
+
+
+
         app.setRule(args[1]);
         //app.setTabSize(4);
         AbstractDocument doc = (AbstractDocument)app.getDocument();
@@ -72,7 +105,7 @@ public class TextEditor
         //      undoList.addActionListener(actionListener);
 
         JScrollPane scroll = new JScrollPane(app);
-        frame.getContentPane().add(scroll);
+        editor.add(scroll);
 
 
         //Line numbers for the text
@@ -82,34 +115,35 @@ public class TextEditor
 
         //Adds the inportant buttons
         JToolBar tb = new JToolBar();
-        JButton btnUndo = new JButton("Undo");
-        JButton btnRedo = new JButton("Redo");
-        JButton btnSave = new JButton("Save");
+        //JButton btnUndo = new JButton("Undo");
+        //JButton btnRedo = new JButton("Redo");
+        JButton btnSave = new JButton("Save and Run");
         JToggleButton btnQuestion = new JToggleButton("Questions");
         JButton btnDone = new JButton("Done");
 
-        btnUndo.addActionListener(new UndoAction(app, btnUndo));
-        btnRedo.addActionListener(new RedoAction(app, btnRedo));
-        btnSave.addActionListener(new saveBtnAction(app, btnSave,args[0]));
+        //btnUndo.addActionListener(new UndoAction(app, btnUndo));
+        //btnRedo.addActionListener(new RedoAction(app, btnRedo));
+        btnSave.addActionListener(new saveBtnAction(args[0], frame, app, output));
         btnQuestion.addItemListener(new questionAction(app, btnQuestion, timer));
-        btnDone.addActionListener(new doneAction(app, btnDone, timer));
-        tb.add(btnUndo);
-        tb.add(btnRedo);
+        btnDone.addActionListener(new doneAction(app, timer));
+
+        //tb.add(btnUndo);
+        //tb.add(btnRedo);
         tb.add(btnSave);
         sidePanel.add(btnQuestion);
         sidePanel.add(btnDone);
         //      tb.add(ruleSelection);
         //      tb.add(undoList);
 
-        btnUndo.setFocusable(false);
-        btnRedo.setFocusable(false);
+        //btnUndo.setFocusable(false);
+        //btnRedo.setFocusable(false);
         btnQuestion.setFocusable(false);
         btnDone.setFocusable(false);
         //      ruleSelection.setFocusable(false);
         //      undoList.setFocusable(false);
 
-        MyBackroundMethod thread = new MyBackroundMethod(btnUndo, btnRedo, app);
-        new Thread(thread).start();
+        //MyBackroundMethod thread = new MyBackroundMethod(btnUndo, btnRedo, app);
+        //new Thread(thread).start();
 
         frame.getContentPane().add(tb, BorderLayout.NORTH);
         frame.setSize(800, 400);

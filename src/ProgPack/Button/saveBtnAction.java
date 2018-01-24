@@ -1,6 +1,7 @@
 package ProgPack.Button;
 
 import ProgPack.Editor;
+import ProgPack.terminalExecution;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,13 +12,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class saveBtnAction implements ActionListener {
+    JFrame frame;
     Editor textArea;
-    JButton redo;
     String fileLoc;
+    JTextArea terminalOutput;
 
-    public saveBtnAction(Editor textArea, JButton redo, String fileLoc) {
+    public saveBtnAction(String fileLoc, JFrame frame, Editor textArea, JTextArea terminalOutput) {
+        this.terminalOutput = terminalOutput;
         this.textArea = textArea;
-        this.redo = redo;
+        this.frame = frame;
         this.fileLoc = fileLoc;
     }
 
@@ -38,5 +41,15 @@ public class saveBtnAction implements ActionListener {
         } catch (IOException o) {
             o.printStackTrace();
         }
+
+        terminalExecution command = new terminalExecution(terminalOutput);
+        try {
+            command.execute("python3 program.py");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+
     }
 }
