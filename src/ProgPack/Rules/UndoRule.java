@@ -1,4 +1,4 @@
-package Editor.Rules;
+package ProgPack.Rules;
 
 
 import java.util.ArrayList;
@@ -14,5 +14,5 @@ public interface UndoRule
      * @param edits list of all edits that have happened
      * @return True if it should be grouped with previous edits. False otherwise
      */
-    public boolean withPrevious(ArrayList<Editor.TimeStampEdits> edits);
+    public boolean withPrevious(ArrayList<ProgPack.TimeStampEdits> edits);
 }

@@ -1,6 +1,7 @@
-package Editor.Button;
+package ProgPack.Button;
 
-import Editor.Editor;
+import ProgPack.Timer;
+import ProgPack.Editor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,18 +10,17 @@ import java.awt.event.ActionListener;
 /**
  * listener for the Redo button in the window
  */
-public class RedoAction implements ActionListener {
+public class doneAction implements ActionListener {
     Editor app;
-    JButton redo;
+    Timer timer;
 
     /**
      * Constructor
      * @param Editor The JTextPane that needs to be edited
-     * @param redo The button that is being listened to.
      */
-    public RedoAction(Editor Editor, JButton redo){
+    public doneAction(Editor Editor, Timer timer){
         app = Editor;
-        this.redo = redo;
+        this.timer = timer;
     }
 
     /**
@@ -28,7 +28,7 @@ public class RedoAction implements ActionListener {
      * @param e action event on the JButton
      */
     public void actionPerformed(ActionEvent e){
-        app.redo();
-        //redo.setEnabled(app.canRedo());
+        timer.end();
+        app.setEnabled(false);
     }
 }

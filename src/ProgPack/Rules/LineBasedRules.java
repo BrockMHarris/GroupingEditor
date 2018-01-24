@@ -1,6 +1,6 @@
-package Editor.Rules;
+package ProgPack.Rules;
 
-import Editor.TimeStampEdits;
+import ProgPack.TimeStampEdits;
 
 import java.util.ArrayList;
 

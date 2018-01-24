@@ -1,4 +1,4 @@
-package Editor.Rules;
+package ProgPack.Rules;
 
 
 
@@ -15,7 +15,7 @@ public class NoGroupBasedRules implements UndoRule
      * @return false
      */
     @Override
-    public boolean withPrevious(ArrayList<Editor.TimeStampEdits> edits)
+    public boolean withPrevious(ArrayList<ProgPack.TimeStampEdits> edits)
     {
         return false;
     }

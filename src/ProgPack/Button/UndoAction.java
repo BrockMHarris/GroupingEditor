@@ -1,6 +1,6 @@
-package Editor.Button;
+package ProgPack.Button;
 
-import Editor.Editor;
+import ProgPack.Editor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,6 +1,6 @@
-package Editor;
+package ProgPack;
 
-import Editor.Rules.*;
+import ProgPack.Rules.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -51,7 +51,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     private MyCompoundEdit currentGroup;
     private UndoManager undoManager;
-    //static Editor.MyLogger logger;
+    Timer timer;
 
     /**
      * Contructor
@@ -61,7 +61,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param Pane this is the JEditorPane that houses the text, I need this so i can get the actual readable characters
      *            and set then to the current TimeStampEdit in the case of a deletion
      */
-    UndoOrganizer(JTextPane Pane)
+    UndoOrganizer(JTextPane Pane, Timer timer)
     {
         pane = Pane;
         //this.undoList = new JComboBox<Editor.MyCompoundEdit>(groups);
@@ -72,6 +72,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         undoManager = new UndoManager();
         undoManager.setLimit(-1);
         currentGroup = new MyCompoundEdit();
+        this.timer = timer;
     }
 
 
@@ -85,7 +86,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
-        timeEdit = new TimeStampEdits(e, name, dot, mark);
+        timeEdit = new TimeStampEdits(e, name, dot, mark, timer);
         edits.add(timeEdit);
         isHighliting = false;
         if (edits.size() <= 1)

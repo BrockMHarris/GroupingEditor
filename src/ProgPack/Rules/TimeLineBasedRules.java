@@ -1,6 +1,4 @@
-package Editor.Rules;
-
-import Editor.TimeStampEdits;
+package ProgPack.Rules;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,7 @@ public class TimeLineBasedRules implements UndoRule
      * @return true if the last edit should be in a new group. False otherwise
      */
     @Override
-    public boolean withPrevious(ArrayList<Editor.TimeStampEdits> edits)
+    public boolean withPrevious(ArrayList<ProgPack.TimeStampEdits> edits)
     {
         boolean lineChange = edits.get(edits.size()-1).getLineNumber() != edits.get(edits.size()-2).getLineNumber();
         //boolean lineChange = edits.get(edits.size()-1).getLetter().contains("\n");

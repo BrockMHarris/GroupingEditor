@@ -1,10 +1,9 @@
-package Editor;
-import Editor.Button.*;
+package ProgPack;
+import ProgPack.Button.*;
 
-import Editor.Button.*;
-import Editor.LineNumber.LineNumberListener;
-import Editor.LineNumber.LineNumberingTextArea;
-import Editor.LineNumber.NewLineFilter;
+import ProgPack.LineNumber.LineNumberListener;
+import ProgPack.LineNumber.LineNumberingTextArea;
+import ProgPack.LineNumber.NewLineFilter;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
@@ -24,26 +23,44 @@ public class TextEditor
     public static void main(String[] args)
     {
         MyLogger.setup(args[0]);
+        Timer timer = new Timer();
         //Editor.MyLogger.write("Rule: " + args[0]);
+        JFrame frame = new JFrame("Before you start");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel BeginScreen = new JPanel(new GridLayout(1,1,0,0));
+        frame.getContentPane().add(BeginScreen, BorderLayout.CENTER);
+        JButton btnBegin = new JButton("Press to Begin");
+        btnBegin.addActionListener(new beginAction(frame, timer, args));
+
+        btnBegin.setLayout(new BorderLayout());
+
+        //JLabel importantInfo = new JLabel("1) something");
+        //JLabel importantInfo2 = new JLabel("2) important");
+
+        //btnBegin.add(importantInfo, BorderLayout.NORTH);
+        //btnBegin.add(importantInfo2);
+        BeginScreen.add(btnBegin, BorderLayout.CENTER);
+        frame.setVisible(true);
+        frame.setSize(800, 400);
+        frame.setLocationRelativeTo(null);
+
+    }
+
+    public static void Editor(Timer timer, String[] args){
         JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         JPanel sidePanel = new JPanel(new GridLayout(2,1,0,0));
         sidePanel.setBackground(Color.gray);
         frame.getContentPane().add(sidePanel, BorderLayout.LINE_END);
 
-
-
-        final Editor app = new Editor();
+        JPanel editor = new JPanel();
+        final Editor app = new Editor(timer);
+        editor.add(app, BorderLayout.CENTER);
         app.setRule(args[1]);
         //app.setTabSize(4);
-        EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                AbstractDocument doc = (AbstractDocument)app.getDocument();
-                doc.setDocumentFilter( new NewLineFilter() );
-            }
-        });
+        AbstractDocument doc = (AbstractDocument)app.getDocument();
+        doc.setDocumentFilter( new NewLineFilter() );
 
         //Buttons for history list. Inactive right now
         //      JComboBox<Editor.MyCompoundEdit> undoList = new JComboBox<Editor.MyCompoundEdit>(app.getGroups());
@@ -74,8 +91,8 @@ public class TextEditor
         btnUndo.addActionListener(new UndoAction(app, btnUndo));
         btnRedo.addActionListener(new RedoAction(app, btnRedo));
         btnSave.addActionListener(new saveBtnAction(app, btnSave,args[0]));
-        btnQuestion.addActionListener(new questionAction(app, btnQuestion));
-        btnDone.addActionListener(new doneAction(app, btnDone));
+        btnQuestion.addItemListener(new questionAction(app, btnQuestion, timer));
+        btnDone.addActionListener(new doneAction(app, btnDone, timer));
         tb.add(btnUndo);
         tb.add(btnRedo);
         tb.add(btnSave);
@@ -86,6 +103,8 @@ public class TextEditor
 
         btnUndo.setFocusable(false);
         btnRedo.setFocusable(false);
+        btnQuestion.setFocusable(false);
+        btnDone.setFocusable(false);
         //      ruleSelection.setFocusable(false);
         //      undoList.setFocusable(false);
 

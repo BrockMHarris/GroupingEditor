@@ -1,6 +1,6 @@
-package Editor.Button;
+package ProgPack.Button;
 
-import Editor.Editor;
+import ProgPack.Editor;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 /**
  * listener for the Redo button in the window
  */
-public class doneAction implements ActionListener {
+public class RedoAction implements ActionListener {
     Editor app;
     JButton redo;
 
     /**
      * Constructor
      * @param Editor The JTextPane that needs to be edited
-     * @param done The button that is being listened to.
+     * @param redo The button that is being listened to.
      */
-    public doneAction(Editor Editor, JButton done){
+    public RedoAction(Editor Editor, JButton redo){
         app = Editor;
         this.redo = redo;
     }
@@ -28,6 +28,7 @@ public class doneAction implements ActionListener {
      * @param e action event on the JButton
      */
     public void actionPerformed(ActionEvent e){
+        app.redo();
         //redo.setEnabled(app.canRedo());
     }
 }

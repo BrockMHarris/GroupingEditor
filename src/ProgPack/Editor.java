@@ -1,6 +1,6 @@
-package Editor;
+package ProgPack;
 
-import Editor.Button.keyBindings;
+import ProgPack.Button.keyBindings;
 
 import javax.swing.*;
 
@@ -20,10 +20,10 @@ public class Editor extends JTextPane
      * This is the constructor that creates the JTextPAne object. It also creates the undoOrginizer which keeps track of
      * all the undo groupings, and creates the keybindings that are available through the keybindings class
      */
-    Editor()
+    Editor(Timer timer)
     {
         super();
-        undoOrganizer = new UndoOrganizer(this);
+        undoOrganizer = new UndoOrganizer(this, timer);
         getDocument().addUndoableEditListener(undoOrganizer);
         getDocument().addDocumentListener(undoOrganizer);
         keyBindings keyBindings = new keyBindings(this);

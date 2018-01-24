@@ -1,7 +1,4 @@
-package Editor.LineNumber;
-
-import Editor.Editor;
-import Editor.LineNumber.LineNumberingTextArea;
+package ProgPack.LineNumber;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

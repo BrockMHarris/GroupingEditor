@@ -1,4 +1,4 @@
-package Editor;
+package ProgPack;
 
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.text.*;
@@ -42,13 +42,13 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
      *             or deleted while bieng highlighed
      * @param Dot This is the last point of a highlight
      */
-    TimeStampEdits(UndoableEditEvent e, String name, int Mark, int Dot)
+    TimeStampEdits(UndoableEditEvent e, String name, int Mark, int Dot, Timer timer)
     {
         docEvents =(AbstractDocument.DefaultDocumentEvent) e.getEdit();
         letter = name;
         start = docEvents.getOffset();
         length = docEvents.getLength();
-        timecreated = System.currentTimeMillis();
+        timecreated = timer.getCurrentTime();
         editType = docEvents.getPresentationName();
         mark = Mark;
         dot = Dot;
