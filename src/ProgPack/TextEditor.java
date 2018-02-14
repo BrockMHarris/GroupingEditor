@@ -26,6 +26,7 @@ public class TextEditor
         Timer timer = new Timer();
         //Editor.MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("Before you start");
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel BeginScreen = new JPanel(new GridLayout(1,1,0,0));
         frame.getContentPane().add(BeginScreen, BorderLayout.CENTER);
@@ -48,6 +49,7 @@ public class TextEditor
 
     public static void Editor(Timer timer, String[] args){
         JFrame frame = new JFrame("Editor.UndoOrganizer");
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -68,8 +70,6 @@ public class TextEditor
             outputPanel.add(output, BorderLayout.CENTER);
 
         JSplitPane mainPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, editor,outputPanel);
-//        mainPanel.add(editor);
-//        mainPanel.add(outputPanel);
 
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -80,12 +80,15 @@ public class TextEditor
         outputPanel.setMinimumSize(minimumSize);
         editor.setMinimumSize(minimumSize);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //editor.setPreferredSize(screenSize);
+
         //Set the initial location and size of the divider
-        mainPanel.setDividerLocation(150);
+        mainPanel.setDividerLocation(screenSize.height-150);
         mainPanel.setDividerSize(10);
 
         //Provide a preferred size for the split pane
-        mainPanel.setPreferredSize(new Dimension(400, 200));
+        //mainPanel.setPreferredSize(new Dimension(400, 200));
 //
 
 
@@ -106,6 +109,9 @@ public class TextEditor
 
         JScrollPane scroll = new JScrollPane(app);
         editor.add(scroll);
+
+        JScrollPane scroll2 = new JScrollPane(output);
+        outputPanel.add(scroll2);
 
 
         //Line numbers for the text

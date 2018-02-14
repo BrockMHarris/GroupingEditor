@@ -10,15 +10,15 @@ import java.io.IOException;
 public class MyLogger {
 
     //private String filename = "~\\Test.txt";
-    private static BufferedWriter bw = null;
-    private static FileWriter fw = null;
+    private static BufferedWriter bw;
+    private static FileWriter fw;
 
     /**
      * Creates a new to hold all the log files
      */
     public static void setup(String fileLoc) {
         try {
-            fw = new FileWriter(fileLoc + "\\Log.txt");
+            fw = new FileWriter("Log.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class MyLogger {
     public static void write(String Message){
 
         try {
-            bw.write(Message);
+            bw.write(Message + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

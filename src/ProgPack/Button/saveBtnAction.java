@@ -32,7 +32,9 @@ public class saveBtnAction implements ActionListener {
 
 
         try {
-            file = new File(fileLoc + "\\program.py");
+            //file = new File(fileLoc + "\\program.py");
+            file = new File("program.py");
+
             out = new FileWriter(file);
             out.write(textArea.getText());
             out.close();

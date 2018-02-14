@@ -1,5 +1,6 @@
 package ProgPack.Button;
 
+import ProgPack.MyLogger;
 import ProgPack.Timer;
 import ProgPack.Editor;
 
@@ -28,7 +29,12 @@ public class doneAction implements ActionListener {
      * @param e action event on the JButton
      */
     public void actionPerformed(ActionEvent e){
-        timer.end();
-        app.setEnabled(false);
+        int dialog = JOptionPane.showConfirmDialog(null, "Are you sure you are done",
+                                                    "Done", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(dialog == JOptionPane.YES_OPTION){
+            timer.end();
+            app.setEnabled(false);
+            MyLogger.close();
+        }
     }
 }
