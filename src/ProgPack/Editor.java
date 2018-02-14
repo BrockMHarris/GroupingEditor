@@ -3,6 +3,8 @@ package ProgPack;
 import ProgPack.Button.keyBindings;
 
 import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
 
 
 /**
@@ -27,6 +29,23 @@ public class Editor extends JTextPane
         getDocument().addUndoableEditListener(undoOrganizer);
         getDocument().addDocumentListener(undoOrganizer);
         keyBindings keyBindings = new keyBindings(this);
+        //SyntaxHighlight pyColor = new SyntaxHighlight(this);
+        setTabs(4);
+        setText("#When you are done press the done button on the right of the window\n" +
+                "#If you have any questions press the questions button, your session will be paused until the button is released\n" +
+                "#Please make sure your program works as intended by pressing F5\n\n" +
+                "def contains_duplicate(list_of_nums):\n" +
+                "\t\"\"\"\n\tTakes a list of integers as an input at returns true if that list contains 1 or more duplicated\n" +
+                "\tThe list cannot be changed by this function\n\t\"\"\"\n\n\n\n\n\t" +
+                "\nlist_of_nums = [1,3,2,4,3,6]\n" +
+                "print(contains_duplicate(list_of_nums))\n\n" );
+    }
+
+    private void setTabs(int charactersPerTab){
+        Document doc = this.getDocument();
+        if (doc instanceof PlainDocument) {
+            doc.putProperty(PlainDocument.tabSizeAttribute, 4);
+        }
     }
 
     /**

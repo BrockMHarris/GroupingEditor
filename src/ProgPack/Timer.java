@@ -7,8 +7,10 @@ public class Timer{
     long endTime;
     long startPauseTime;
     long StoppedTime;
+    long startTime;
 
     public Timer(){
+        startTime = System.currentTimeMillis();
     }
 
     public void begin(){
@@ -25,14 +27,14 @@ public class Timer{
 
     public void unPause(){
         float unPauseTime = System.currentTimeMillis();
-        StoppedTime += unPauseTime - startPauseTime;
+        StoppedTime += (unPauseTime - startPauseTime);
     }
 
     public long getFinalTime(){
-        return endTime - beginTime - StoppedTime;
+        return endTime - (beginTime + StoppedTime);
     }
 
     public long getCurrentTime(){
-        return System.currentTimeMillis() - startPauseTime - StoppedTime;
+        return System.currentTimeMillis() - (startTime + StoppedTime);
     }
 }

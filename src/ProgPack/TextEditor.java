@@ -61,11 +61,13 @@ public class TextEditor
 
         JPanel editor = new JPanel();
         editor.setLayout(new BorderLayout());
+            editor.setPreferredSize(new Dimension(100, 800));
             Editor app = new Editor(timer);
             editor.add(app, BorderLayout.CENTER);
 
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
+            //editor.setPreferredSize(new Dimension(100, 100));
             JTextArea output = new JTextArea();
             outputPanel.add(output, BorderLayout.CENTER);
 

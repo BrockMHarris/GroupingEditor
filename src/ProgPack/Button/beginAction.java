@@ -1,6 +1,7 @@
 package ProgPack.Button;
 
 import ProgPack.Editor;
+import ProgPack.MyLogger;
 import ProgPack.TextEditor;
 import ProgPack.Timer;
 
