@@ -1,10 +1,10 @@
 package ProgPack;
 
 import ProgPack.Button.keyBindings;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
-import javax.swing.*;
 import javax.swing.text.*;
-import java.awt.*;
 
 
 /**
@@ -14,7 +14,7 @@ import java.awt.*;
  *
  * The iditor type used is JTextPane because it allows for different colored text within one document.
  */
-public class Editor extends JTextPane
+public class Editor extends RSyntaxTextArea
 {
     private UndoOrganizer undoOrganizer;
 
@@ -24,11 +24,12 @@ public class Editor extends JTextPane
      */
     Editor(Timer timer)
     {
-        super();
+        super(20, 60);
         undoOrganizer = new UndoOrganizer(this, timer);
         getDocument().addUndoableEditListener(undoOrganizer);
         getDocument().addDocumentListener(undoOrganizer);
         keyBindings keyBindings = new keyBindings(this);
+        //CompletionProvider provider
         //SyntaxHighlight pyColor = new SyntaxHighlight(this);
         setTabs(4);
         setText("#When you are done press the done button on the right of the window\n" +

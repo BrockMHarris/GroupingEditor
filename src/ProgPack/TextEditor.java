@@ -4,6 +4,10 @@ import ProgPack.Button.*;
 import ProgPack.LineNumber.LineNumberListener;
 import ProgPack.LineNumber.LineNumberingTextArea;
 import ProgPack.LineNumber.NewLineFilter;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
@@ -22,7 +26,7 @@ public class TextEditor
 {
     public static void main(String[] args)
     {
-        MyLogger.setup(args[0]);
+        MyLogger.setup();
         Timer timer = new Timer();
         //Editor.MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("Before you start");
@@ -59,11 +63,18 @@ public class TextEditor
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(sidePanel, BorderLayout.EAST);
 
-        JPanel editor = new JPanel();
-        editor.setLayout(new BorderLayout());
-            editor.setPreferredSize(new Dimension(100, 800));
-            Editor app = new Editor(timer);
-            editor.add(app, BorderLayout.CENTER);
+        JPanel editorWindow = new JPanel();
+        editorWindow.setLayout(new BorderLayout());
+            Editor textArea = new Editor(timer);
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+            textArea.setCodeFoldingEnabled(true);
+            RTextScrollPane sp = new RTextScrollPane(textArea);
+            editorWindow.add(sp, BorderLayout.CENTER);
+
+
+//            editor.setPreferredSize(new Dimension(100, 800));
+//            Editor app = new Editor(timer);
+//            editor.add(app, BorderLayout.CENTER);
 
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
@@ -71,7 +82,7 @@ public class TextEditor
             JTextArea output = new JTextArea();
             outputPanel.add(output, BorderLayout.CENTER);
 
-        JSplitPane mainPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, editor,outputPanel);
+        JSplitPane mainPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, editorWindow,outputPanel);
 
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -80,7 +91,7 @@ public class TextEditor
         //Provide minimum sizes for the two components in the split pane
         Dimension minimumSize = new Dimension(100, 50);
         outputPanel.setMinimumSize(minimumSize);
-        editor.setMinimumSize(minimumSize);
+        editorWindow.setMinimumSize(minimumSize);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         //editor.setPreferredSize(screenSize);
@@ -95,9 +106,9 @@ public class TextEditor
 
 
 
-        app.setRule(args[1]);
+        textArea.setRule(args[0]);
         //app.setTabSize(4);
-        AbstractDocument doc = (AbstractDocument)app.getDocument();
+        AbstractDocument doc = (AbstractDocument)textArea.getDocument();
         doc.setDocumentFilter( new NewLineFilter() );
 
         //Buttons for history list. Inactive right now
@@ -109,17 +120,17 @@ public class TextEditor
         //      Editor.Button.UndoListActionListener actionListener = new Editor.Button.UndoListActionListener(app, undoList);
         //      undoList.addActionListener(actionListener);
 
-        JScrollPane scroll = new JScrollPane(app);
-        editor.add(scroll);
+        JScrollPane scroll = new JScrollPane(textArea);
+        editorWindow.add(scroll);
 
         JScrollPane scroll2 = new JScrollPane(output);
         outputPanel.add(scroll2);
 
 
         //Line numbers for the text
-        LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(app);
+        LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(textArea);
         scroll.setRowHeaderView(lineNumberingTextArea);
-        app.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
+        textArea.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
 
         //Adds the inportant buttons
         JToolBar tb = new JToolBar();
@@ -131,9 +142,9 @@ public class TextEditor
 
         //btnUndo.addActionListener(new UndoAction(app, btnUndo));
         //btnRedo.addActionListener(new RedoAction(app, btnRedo));
-        btnSave.addActionListener(new saveBtnAction(args[0], frame, app, output));
-        btnQuestion.addItemListener(new questionAction(app, btnQuestion, timer));
-        btnDone.addActionListener(new doneAction(app, timer));
+        btnSave.addActionListener(new saveBtnAction(frame, textArea, output));
+        btnQuestion.addItemListener(new questionAction(textArea, btnQuestion, timer));
+        btnDone.addActionListener(new doneAction(textArea, timer));
 
         //tb.add(btnUndo);
         //tb.add(btnRedo);

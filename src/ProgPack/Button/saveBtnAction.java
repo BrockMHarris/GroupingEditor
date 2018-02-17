@@ -17,11 +17,10 @@ public class saveBtnAction implements ActionListener {
     String fileLoc;
     JTextArea terminalOutput;
 
-    public saveBtnAction(String fileLoc, JFrame frame, Editor textArea, JTextArea terminalOutput) {
+    public saveBtnAction(JFrame frame, Editor textArea, JTextArea terminalOutput) {
         this.terminalOutput = terminalOutput;
         this.textArea = textArea;
         this.frame = frame;
-        this.fileLoc = fileLoc;
     }
 
 

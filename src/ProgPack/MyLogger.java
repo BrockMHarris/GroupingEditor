@@ -16,7 +16,7 @@ public class MyLogger {
     /**
      * Creates a new to hold all the log files
      */
-    public static void setup(String fileLoc) {
+    public static void setup() {
         try {
             fw = new FileWriter("Log.txt");
         } catch (IOException e) {

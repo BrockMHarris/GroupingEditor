@@ -1,6 +1,7 @@
 package ProgPack;
 
 import ProgPack.Rules.*;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -24,7 +25,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     private ArrayList<TimeStampEdits> edits = new ArrayList<TimeStampEdits>();
     private Vector<MyCompoundEdit> groups = new Vector<MyCompoundEdit>();
     private int groupPointer;
-    private JTextPane pane;
+    private RSyntaxTextArea pane;
     private JComboBox undoList;
     private String previousText;
     private TimeStampEdits timeEdit;
@@ -61,7 +62,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param Pane this is the JEditorPane that houses the text, I need this so i can get the actual readable characters
      *            and set then to the current TimeStampEdit in the case of a deletion
      */
-    UndoOrganizer(JTextPane Pane, Timer timer)
+    UndoOrganizer(RSyntaxTextArea Pane, Timer timer)
     {
         pane = Pane;
         //this.undoList = new JComboBox<Editor.MyCompoundEdit>(groups);
@@ -206,45 +207,46 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      */
     private void inputKeyTyped(java.awt.event.KeyEvent evt) {
         String text = "";
-        if (evt.getKeyChar()=='('){
-            int pos  = pane.getCaretPosition();
-            text = pane.getText();
-            text = text.substring(0, pos) + ")" + text.substring(pos, text.length());
-            pane.setText(text);
-            pane.setCaretPosition(pos);
-        }
 
-        if (evt.getKeyChar()=='\"'){
-            int pos  = pane.getCaretPosition();
-            text = pane.getText();
-            text = text.substring(0, pos) + "\"" + text.substring(pos, text.length());
-            pane.setText(text);
-            pane.setCaretPosition(pos);
-        }
-
-        if (evt.getKeyChar()=='{'){
-            int pos  = pane.getCaretPosition();
-            text = pane.getText();
-            text = text.substring(0, pos) + "}" + text.substring(pos, text.length());
-            pane.setText(text);
-            pane.setCaretPosition(pos);
-        }
-
-        if (evt.getKeyChar()=='\''){
-            int pos  = pane.getCaretPosition();
-            text = pane.getText();
-            text = text.substring(0, pos) + "\'" + text.substring(pos, text.length());
-            pane.setText(text);
-            pane.setCaretPosition(pos);
-        }
-
-        if (evt.getKeyChar()=='['){
-            int pos  = pane.getCaretPosition();
-            text = pane.getText();
-            text = text.substring(0, pos) + "]" + text.substring(pos, text.length());
-            pane.setText(text);
-            pane.setCaretPosition(pos);
-        }
+//        if (evt.getKeyChar()=='('){
+//            int pos  = pane.getCaretPosition();
+//            text = pane.getText();
+//            text = text.substring(0, pos) + ")" + text.substring(pos, text.length());
+//            pane.setText(text);
+//            pane.setCaretPosition(pos);
+//        }
+//
+//        if (evt.getKeyChar()=='\"'){
+//            int pos  = pane.getCaretPosition();
+//            text = pane.getText();
+//            text = text.substring(0, pos) + "\"" + text.substring(pos, text.length());
+//            pane.setText(text);
+//            pane.setCaretPosition(pos);
+//        }
+//
+//        if (evt.getKeyChar()=='{'){
+//            int pos  = pane.getCaretPosition();
+//            text = pane.getText();
+//            text = text.substring(0, pos) + "}" + text.substring(pos, text.length());
+//            pane.setText(text);
+//            pane.setCaretPosition(pos);
+//        }
+//
+//        if (evt.getKeyChar()=='\''){
+//            int pos  = pane.getCaretPosition();
+//            text = pane.getText();
+//            text = text.substring(0, pos) + "\'" + text.substring(pos, text.length());
+//            pane.setText(text);
+//            pane.setCaretPosition(pos);
+//        }
+//
+//        if (evt.getKeyChar()=='['){
+//            int pos  = pane.getCaretPosition();
+//            text = pane.getText();
+//            text = text.substring(0, pos) + "]" + text.substring(pos, text.length());
+//            pane.setText(text);
+//            pane.setCaretPosition(pos);
+//        }
     }
 
 

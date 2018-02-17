@@ -1,21 +1,22 @@
 package ProgPack.LineNumber;
 
-import javax.swing.*;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+
 import javax.swing.text.Element;
 import java.awt.*;
 
 /**
  * Creates the line numbers in the window for each new line that is edited
  */
-public class LineNumberingTextArea extends JTextArea
+public class LineNumberingTextArea extends RSyntaxTextArea
 {
-    private JTextPane textArea;
+    private RSyntaxTextArea textArea;
 
     /**
      * constructor
      * @param textArea the window that needs to be tracked for line numbers
      */
-    public LineNumberingTextArea(JTextPane textArea)
+    public LineNumberingTextArea(RSyntaxTextArea textArea)
     {
         this.textArea = textArea;
         setBackground(Color.LIGHT_GRAY);
