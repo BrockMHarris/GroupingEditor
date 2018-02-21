@@ -197,10 +197,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         }
     }
 
-//    Vector<Editor.MyCompoundEdit> getGroups(){
-//        return groups;
-//    }
-
     /**
      * Automatically closes opening brackets
      * @param evt edit event
@@ -256,9 +252,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      * @param documentEvent and change to the document
      */
     @Override
-    public void insertUpdate(DocumentEvent documentEvent)
-    {
-
+    public void insertUpdate(DocumentEvent documentEvent) {
     }
 
     /**
@@ -288,7 +282,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      */
     @Override
     public void changedUpdate(DocumentEvent documentEvent) {
-
     }
 
 
@@ -321,7 +314,6 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     public void keyTyped(KeyEvent keyEvent) {
         name = Character.toString(keyEvent.getKeyChar());
         inputKeyTyped(keyEvent);
-
     }
 
     /**

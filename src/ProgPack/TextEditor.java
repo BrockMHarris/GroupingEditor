@@ -39,11 +39,6 @@ public class TextEditor
 
         btnBegin.setLayout(new BorderLayout());
 
-        //JLabel importantInfo = new JLabel("1) something");
-        //JLabel importantInfo2 = new JLabel("2) important");
-
-        //btnBegin.add(importantInfo, BorderLayout.NORTH);
-        //btnBegin.add(importantInfo2);
         BeginScreen.add(btnBegin, BorderLayout.CENTER);
         frame.setVisible(true);
         frame.setSize(800, 400);
@@ -68,13 +63,15 @@ public class TextEditor
             Editor textArea = new Editor(timer);
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
             textArea.setCodeFoldingEnabled(true);
+            textArea.setTabSize(4);
+            Font currFont  = textArea.getFont();
+            textArea.setFont(new Font("Courier New", currFont.getStyle(), currFont.getSize() +2));
             RTextScrollPane sp = new RTextScrollPane(textArea);
+            sp.setLineNumbersEnabled(true);
+            sp.setFoldIndicatorEnabled(true);
+            sp.setIconRowHeaderEnabled(true);
             editorWindow.add(sp, BorderLayout.CENTER);
 
-
-//            editor.setPreferredSize(new Dimension(100, 800));
-//            Editor app = new Editor(timer);
-//            editor.add(app, BorderLayout.CENTER);
 
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
@@ -120,17 +117,17 @@ public class TextEditor
         //      Editor.Button.UndoListActionListener actionListener = new Editor.Button.UndoListActionListener(app, undoList);
         //      undoList.addActionListener(actionListener);
 
-        JScrollPane scroll = new JScrollPane(textArea);
-        editorWindow.add(scroll);
+        //JScrollPane scroll = new JScrollPane(textArea);
+        //editorWindow.add(scroll);
 
         JScrollPane scroll2 = new JScrollPane(output);
         outputPanel.add(scroll2);
 
 
         //Line numbers for the text
-        LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(textArea);
-        scroll.setRowHeaderView(lineNumberingTextArea);
-        textArea.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
+        //LineNumberingTextArea lineNumberingTextArea = new LineNumberingTextArea(textArea);
+        //scroll.setRowHeaderView(lineNumberingTextArea);
+        //textArea.getDocument().addDocumentListener(new LineNumberListener(lineNumberingTextArea));
 
         //Adds the inportant buttons
         JToolBar tb = new JToolBar();

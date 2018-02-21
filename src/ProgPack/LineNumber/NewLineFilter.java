@@ -28,7 +28,11 @@ public class NewLineFilter extends DocumentFilter {
 
         while (true) {
             String temp = doc.getText(i, 1);
-
+            //TODO How to make the editor auto-indent when there is a colon
+//            if(temp.equals(":")){
+//                whiteSpace.append("\t");
+//                i++;
+//            }
             if (temp.equals(" ") || temp.equals("\t")) {
                 whiteSpace.append(temp);
                 i++;
