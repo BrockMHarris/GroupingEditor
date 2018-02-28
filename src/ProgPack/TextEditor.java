@@ -41,7 +41,7 @@ public class TextEditor
 
     }
 
-    public static void Editor(Timer timer, String[] args){
+    public static void Editor(JFrame newframe, Timer timer, String[] args){
         JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

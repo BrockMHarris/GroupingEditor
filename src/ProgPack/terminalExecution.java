@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class terminalExecution {
@@ -51,6 +52,7 @@ public class terminalExecution {
         BufferedReader stdError = new BufferedReader(new
                 InputStreamReader(process.getErrorStream()));
 
+
         // read the output from the command
         String s = null;
         while ((s = stdInput.readLine()) != null) {
@@ -65,6 +67,14 @@ public class terminalExecution {
             System.out.println(s);
         }
 
+//        if(process.isAlive())
+//        process.destroy();
+//        if(process.)
+//        terminalOutput.append("You may have an infinite loop");
+//        boolean exitCode = process.waitFor((long)2, TimeUnit.SECONDS);
+//        if(exitCode==false){
+//            terminalOutput.append("You may have an infinite loop");
+//        }
         int exitCode = process.waitFor();
         assert exitCode == 0;
     }

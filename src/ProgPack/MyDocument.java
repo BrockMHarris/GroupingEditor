@@ -7,18 +7,25 @@ import org.fife.ui.rsyntaxtextarea.TokenMaker;
 
 public class MyDocument extends RSyntaxDocument
 {
-    private AbstractJFlexCTokenMaker tokenMaker;
 
     public MyDocument(String syntaxStyle)
     {
         super(syntaxStyle);
+
     }
 
-    @Override
-    public boolean getShouldIndentNextLine(int line) {
-        Token t = getTokenListForLine(line);
-        t = t.getLastNonCommentNonWhitespaceToken();
-        //TokenMaker colon = getClosestStandardTokenTypeForInternalType();
-        return tokenMaker.getShouldIndentNextLineAfter(t);
-    }
+//    @Override
+//    public boolean getShouldIndentNextLine(int line) {
+//        Token t = getTokenListForLine(line);
+//        t = t.getLastNonCommentNonWhitespaceToken();
+//        if (t.toString().equals(":")){
+//            return true;
+//        }
+//        else {
+//            //return super.tokenMaker.getShouldIndentNextLineAfter(t);
+//
+//        }
+//        //TokenMaker colon = getClosestStandardTokenTypeForInternalType();
+//        //return tokenMaker.getShouldIndentNextLineAfter(t);
+//    }
 }

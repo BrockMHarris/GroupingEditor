@@ -25,6 +25,9 @@ public class beginAction implements ActionListener {
         frame.setVisible(false);
         timer.begin();
         MyLogger.setup();
-        TextEditor.Editor(timer,args);
+        //frame.removeAll();
+        //frame.revalidate();
+        //frame.repaint();
+        TextEditor.Editor(frame, timer,args);
     }
 }
