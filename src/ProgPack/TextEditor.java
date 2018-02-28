@@ -1,7 +1,7 @@
 package ProgPack;
 import ProgPack.Button.*;
 
-import ProgPack.LineNumber.NewLineFilter;
+//import ProgPack.LineNumber.NewLineFilter;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
@@ -56,15 +56,17 @@ public class TextEditor
         JPanel editorWindow = new JPanel();
         editorWindow.setLayout(new BorderLayout());
             Editor textArea = new Editor(timer);
+            //MyDocument doc = new MyDocument(textArea.getSyntaxEditingStyle());
+            //textArea.setDocument(doc);
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
-            textArea.setCodeFoldingEnabled(true);
+            //textArea.setCodeFoldingEnabled(true);
             textArea.setTabSize(4);
             Font currFont  = textArea.getFont();
             textArea.setFont(new Font("Courier New", currFont.getStyle(), currFont.getSize() +2));
             RTextScrollPane sp = new RTextScrollPane(textArea);
             sp.setLineNumbersEnabled(true);
-            sp.setFoldIndicatorEnabled(true);
-            sp.setIconRowHeaderEnabled(true);
+            //sp.setFoldIndicatorEnabled(true);
+            //sp.setIconRowHeaderEnabled(true);
             editorWindow.add(sp, BorderLayout.CENTER);
 
 
@@ -99,8 +101,8 @@ public class TextEditor
 
         textArea.setRule(args[0]);
         //app.setTabSize(4);
-        AbstractDocument doc = (AbstractDocument)textArea.getDocument();
-        doc.setDocumentFilter( new NewLineFilter() );
+        //AbstractDocument doc = (AbstractDocument)textArea.getDocument();
+        //doc.setDocumentFilter( new NewLineFilter() );
 
         //Buttons for history list. Inactive right now
         //      JComboBox<Editor.MyCompoundEdit> undoList = new JComboBox<Editor.MyCompoundEdit>(app.getGroups());

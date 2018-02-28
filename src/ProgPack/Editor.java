@@ -3,7 +3,7 @@ package ProgPack;
 import ProgPack.Button.keyBindings;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
-import javax.swing.text.*;
+import javax.swing.*;
 
 
 /**
