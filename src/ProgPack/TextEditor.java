@@ -1,11 +1,7 @@
 package ProgPack;
 import ProgPack.Button.*;
 
-import ProgPack.LineNumber.LineNumberListener;
-import ProgPack.LineNumber.LineNumberingTextArea;
 import ProgPack.LineNumber.NewLineFilter;
-import org.fife.ui.autocomplete.CompletionProvider;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
@@ -26,7 +22,6 @@ public class TextEditor
 {
     public static void main(String[] args)
     {
-        MyLogger.setup();
         Timer timer = new Timer();
         //Editor.MyLogger.write("Rule: " + args[0]);
         JFrame frame = new JFrame("Before you start");
@@ -34,7 +29,7 @@ public class TextEditor
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel BeginScreen = new JPanel(new GridLayout(1,1,0,0));
         frame.getContentPane().add(BeginScreen, BorderLayout.CENTER);
-        JButton btnBegin = new JButton("Press to Begin");
+        JButton btnBegin = new JButton("Press anywhere to Begin");
         btnBegin.addActionListener(new beginAction(frame, timer, args));
 
         btnBegin.setLayout(new BorderLayout());
@@ -75,7 +70,7 @@ public class TextEditor
 
         JPanel outputPanel = new JPanel();
         outputPanel.setLayout(new BorderLayout());
-            //editor.setPreferredSize(new Dimension(100, 100));
+            outputPanel.setPreferredSize(new Dimension(100, 100));
             JTextArea output = new JTextArea();
             outputPanel.add(output, BorderLayout.CENTER);
 
@@ -91,10 +86,9 @@ public class TextEditor
         editorWindow.setMinimumSize(minimumSize);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //editor.setPreferredSize(screenSize);
-
+        mainPanel.setResizeWeight(0.8);
         //Set the initial location and size of the divider
-        mainPanel.setDividerLocation(screenSize.height-150);
+        mainPanel.setDividerLocation(screenSize.height-100);
         mainPanel.setDividerSize(10);
 
         //Provide a preferred size for the split pane

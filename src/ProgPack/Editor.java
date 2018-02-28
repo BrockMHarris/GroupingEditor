@@ -1,7 +1,6 @@
 package ProgPack;
 
 import ProgPack.Button.keyBindings;
-import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.text.*;
@@ -38,8 +37,9 @@ public class Editor extends RSyntaxTextArea
                 "\tThe list cannot be changed by this function\n\t\"\"\"\n\n\n\n\n\t" +
                 "\nlist_with_dups = [1,3,2,4,3,6]" +
                 "\nlist_no_dups = [4,8,3,10,6,5]\n" +
-                "print(contains_duplicate(list_with_dups))  #should return True\n" +
-                "print(contains_duplicate(list_no_dups))    #should return False\n" );
+                "print(contains_duplicate(list_with_dups))  # should return True\n" +
+                "print(contains_duplicate(list_no_dups))    # should return False\n" );
+        MyLogger.clear();
     }
 
     /**

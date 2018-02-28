@@ -55,9 +55,6 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
         isHighlighted = mark != dot;
         //this.pane = pane;
 
-        MyLogger.write("Time: " + timecreated + "\tType: " + editType);
-
-        //this.logger = logger;
 
         if(editType.equals("addition")){
             try {
@@ -66,11 +63,19 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
                 e1.printStackTrace();
             }
         }
+        else {
+        }
+
         // TODO fix line numbers on newline so that newlines are counted as previous lines
 
-        int caretPosition = docEvents.getDocument().getLength();
+
+        int caretPosition = start;//docEvents.getDocument().getLength();
         Element root = docEvents.getDocument().getDefaultRootElement();
         lineNum = root.getElementIndex(caretPosition);
+        int lineNumStartAtOne = lineNum+1;
+
+        MyLogger.writeNewLine(timecreated + ":" + editType + ":" + letter + ":" + isHighlighted + ":" +
+                mark + ":" + dot + ":" + start + ":" + length + ":" + lineNumStartAtOne);
     }
 
     /**

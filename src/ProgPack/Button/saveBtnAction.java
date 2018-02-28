@@ -1,6 +1,7 @@
 package ProgPack.Button;
 
 import ProgPack.Editor;
+import ProgPack.MyLogger;
 import ProgPack.terminalExecution;
 
 import javax.swing.*;
@@ -29,6 +30,8 @@ public class saveBtnAction implements ActionListener {
         File file = null;
         FileWriter out = null;
 
+
+        MyLogger.writeNewLine("-");
 
         try {
             //file = new File(fileLoc + "\\program.py");
