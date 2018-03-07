@@ -18,7 +18,7 @@ public class MyLogger {
      */
     public static void setup() {
         try {
-            fw = new FileWriter("Log.txt");
+            fw = new FileWriter("Log.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }

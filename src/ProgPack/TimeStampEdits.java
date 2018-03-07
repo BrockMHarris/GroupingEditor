@@ -74,7 +74,7 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
         lineNum = root.getElementIndex(caretPosition);
         int lineNumStartAtOne = lineNum+1;
 
-        MyLogger.writeNewLine(timecreated + ":" + editType + ":" + letter + ":" + isHighlighted + ":" +
+        MyLogger.writeNewLine(timecreated + "," + editType + "," + letter + "," + isHighlighted + ":" +
                 mark + ":" + dot + ":" + start + ":" + length + ":" + lineNumStartAtOne);
     }
 
