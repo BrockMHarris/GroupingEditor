@@ -31,7 +31,7 @@ public class saveBtnAction implements ActionListener {
         FileWriter out = null;
 
 
-        MyLogger.writeNewLine("-");
+        MyLogger.write(new String[]{"-"});
 
         try {
             //file = new File(fileLoc + "\\program.py");

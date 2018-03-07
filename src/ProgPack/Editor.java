@@ -4,6 +4,7 @@ import ProgPack.Button.keyBindings;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
+import java.io.IOException;
 
 
 /**
@@ -39,7 +40,7 @@ public class Editor extends RSyntaxTextArea
                 "\nlist_no_dups = [4,8,3,10,6,5]\n" +
                 "print(contains_duplicate(list_with_dups))  # should return True\n" +
                 "print(contains_duplicate(list_no_dups))    # should return False\n" );
-        MyLogger.clear();
+            MyLogger.clear();
     }
 
     /**

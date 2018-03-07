@@ -21,16 +21,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/autocomplete-2.6.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/spellchecker-2.6.0.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/opencsv-4.1(1).jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

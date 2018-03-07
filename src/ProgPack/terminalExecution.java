@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class terminalExecution {
@@ -45,24 +46,33 @@ public class terminalExecution {
         builder.directory(new File(System.getProperty("user.dir")));
         Process process = builder.start();
 
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(process.getInputStream()));
 
-        BufferedReader stdError = new BufferedReader(new
-                InputStreamReader(process.getErrorStream()));
+        if(process.waitFor((long) 2, TimeUnit.SECONDS)){
 
-        // read the output from the command
-        String s = null;
-        while ((s = stdInput.readLine()) != null) {
-            terminalOutput.append(s + "\n");
-            System.out.println(s);
+            BufferedReader stdInput = new BufferedReader(new
+                    InputStreamReader(process.getInputStream()));
 
+            BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(process.getErrorStream()));
+
+            // read the output from the command
+            String s = null;
+            while ((s = stdInput.readLine()) != null) {
+                terminalOutput.append(s + "\n");
+                System.out.println(s);
+
+            }
+
+            // read any errors from the attempted command
+            while ((s = stdError.readLine()) != null) {
+                terminalOutput.append(s + "\n");
+                System.out.println(s);
+            }
         }
-
-        // read any errors from the attempted command
-        while ((s = stdError.readLine()) != null) {
-            terminalOutput.append(s + "\n");
-            System.out.println(s);
+        else {
+            process.destroy();
+            terminalOutput.append("There might be an infinite loop");
+            System.out.println("There might be an infinite loop");
         }
 
         int exitCode = process.waitFor();
