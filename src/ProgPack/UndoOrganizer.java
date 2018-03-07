@@ -74,6 +74,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         undoManager.setLimit(-1);
         currentGroup = new MyCompoundEdit();
         this.timer = timer;
+        name = "temp"; //overwritten when insertion happens
     }
 
 
@@ -87,6 +88,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
+        //TODO New line charactor events delete rest of previous line and add it back for no reason
         timeEdit = new TimeStampEdits(e, name, dot, mark, timer);
         edits.add(timeEdit);
         isHighliting = false;
@@ -249,10 +251,19 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
     /**
      * Required method for Document listener. unused
-     * @param documentEvent and change to the document
+     * @param e and change to the document
      */
     @Override
-    public void insertUpdate(DocumentEvent documentEvent) {
+    public void insertUpdate(DocumentEvent e) {
+        int offset = e.getOffset();
+        int length = e.getLength();
+        if(!name.equals("(\\n)") && !name.equals("(\\t)")){
+            try {
+                name = e.getDocument().getText(offset,length);
+            } catch (BadLocationException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -312,8 +323,8 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
      */
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        name = Character.toString(keyEvent.getKeyChar());
-        inputKeyTyped(keyEvent);
+        //name = Character.toString(keyEvent.getKeyChar());
+        //inputKeyTyped(keyEvent);
     }
 
     /**
@@ -327,7 +338,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
         if(keyEvent.getExtendedKeyCode() == NEWLINEKEYCODE){
             name = "(\\n)";
         }
-        if(keyEvent.getExtendedKeyCode() == TABKEYCODE){
+        else if(keyEvent.getExtendedKeyCode() == TABKEYCODE){
             name = "(\\t)";
         }
         previousText = pane.getText();

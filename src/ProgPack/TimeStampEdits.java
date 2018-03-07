@@ -66,16 +66,15 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
         else {
         }
 
-        // TODO fix line numbers on newline so that newlines are counted as previous lines
-
 
         int caretPosition = start;//docEvents.getDocument().getLength();
         Element root = docEvents.getDocument().getDefaultRootElement();
         lineNum = root.getElementIndex(caretPosition);
         int lineNumStartAtOne = lineNum+1;
 
-        MyLogger.writeNewLine(timecreated + ":" + editType + ":" + letter + ":" + isHighlighted + ":" +
-                mark + ":" + dot + ":" + start + ":" + length + ":" + lineNumStartAtOne);
+
+        MyLogger.write(new String[]{String.valueOf(timecreated), editType, "\"" + letter + "\"", String.valueOf(isHighlighted), String.valueOf(mark),
+                String.valueOf(dot), String.valueOf(start), String.valueOf(length), String.valueOf(lineNumStartAtOne)});
     }
 
     /**

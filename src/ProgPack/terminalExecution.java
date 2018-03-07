@@ -46,35 +46,35 @@ public class terminalExecution {
         builder.directory(new File(System.getProperty("user.dir")));
         Process process = builder.start();
 
-        BufferedReader stdInput = new BufferedReader(new
-                InputStreamReader(process.getInputStream()));
 
-        BufferedReader stdError = new BufferedReader(new
-                InputStreamReader(process.getErrorStream()));
+        if(process.waitFor((long) 2, TimeUnit.SECONDS)){
 
+            BufferedReader stdInput = new BufferedReader(new
+                    InputStreamReader(process.getInputStream()));
 
-        // read the output from the command
-        String s = null;
-        while ((s = stdInput.readLine()) != null) {
-            terminalOutput.append(s + "\n");
-            System.out.println(s);
+            BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(process.getErrorStream()));
 
+            // read the output from the command
+            String s = null;
+            while ((s = stdInput.readLine()) != null) {
+                terminalOutput.append(s + "\n");
+                System.out.println(s);
+
+            }
+
+            // read any errors from the attempted command
+            while ((s = stdError.readLine()) != null) {
+                terminalOutput.append(s + "\n");
+                System.out.println(s);
+            }
+        }
+        else {
+            process.destroy();
+            terminalOutput.append("There might be an infinite loop");
+            System.out.println("There might be an infinite loop");
         }
 
-        // read any errors from the attempted command
-        while ((s = stdError.readLine()) != null) {
-            terminalOutput.append(s + "\n");
-            System.out.println(s);
-        }
-
-//        if(process.isAlive())
-//        process.destroy();
-//        if(process.)
-//        terminalOutput.append("You may have an infinite loop");
-//        boolean exitCode = process.waitFor((long)2, TimeUnit.SECONDS);
-//        if(exitCode==false){
-//            terminalOutput.append("You may have an infinite loop");
-//        }
         int exitCode = process.waitFor();
         assert exitCode == 0;
     }

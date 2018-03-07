@@ -41,7 +41,7 @@ public class TextEditor
 
     }
 
-    public static void Editor(JFrame newframe, Timer timer, String[] args){
+    public static void Editor(Timer timer){
         JFrame frame = new JFrame("Editor.UndoOrganizer");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,7 +99,7 @@ public class TextEditor
 
 
 
-        textArea.setRule(args[0]);
+        //textArea.setRule(args[0]);
         //app.setTabSize(4);
         //AbstractDocument doc = (AbstractDocument)textArea.getDocument();
         //doc.setDocumentFilter( new NewLineFilter() );

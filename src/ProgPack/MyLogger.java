@@ -1,8 +1,8 @@
 package ProgPack;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.opencsv.CSVWriter;
+
+import java.io.*;
 
 /**
  * Logger to log all the important information from the edits that were made
@@ -10,51 +10,44 @@ import java.io.IOException;
 public class MyLogger {
 
     //private String filename = "~\\Test.txt";
-    private static BufferedWriter bw;
-    private static FileWriter fw;
+    private static OutputStreamWriter osw;
+    private static FileOutputStream fos;
+    private static CSVWriter writer;
 
     /**
      * Creates a new to hold all the log files
      */
     public static void setup() {
         try {
-            fw = new FileWriter("Log.txt");
+            fos = new FileOutputStream("Log.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        bw = new BufferedWriter(fw);
+
+        try {
+            osw = new OutputStreamWriter(fos, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        writer = new CSVWriter(osw);
+        writer.writeNext(new String[]{"timecreated", "editType", "letter", "isHighlighted", "mark",
+                "dot", "start", "length","lineNumStartAtOne"});
     }
 
     /**
      * Writes a message to the log file
      * @param Message message to be added to the file
      */
-    public static void write(String Message){
-
-        try {
-            bw.write(Message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void write(String[] Message){
+            writer.writeNext(Message);
     }
 
-    /**
-     * Writes a message to the log file
-     * @param Message message to be added to the file
-     */
-    public static void writeNewLine(String Message){
-
-        try {
-            bw.write(Message + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Clears the log file
      */
-    public static void clear(){
+    public static void clear()
+    {
         MyLogger.close();
         MyLogger.setup();
 
@@ -62,12 +55,14 @@ public class MyLogger {
     /**
      * Closes the log file
      */
-    public static void close(){
+    public static void close()
+    {
         try {
-            bw.close();
-            fw.close();
-        } catch (IOException ex){
-            ex.printStackTrace();
+            writer.close();
+            osw.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
