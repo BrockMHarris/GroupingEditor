@@ -88,6 +88,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void undoableEditHappened(UndoableEditEvent e)
     {
+        //TODO New line charactor events delete rest of previous line and add it back for no reason
         timeEdit = new TimeStampEdits(e, name, dot, mark, timer);
         edits.add(timeEdit);
         isHighliting = false;
@@ -256,7 +257,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     public void insertUpdate(DocumentEvent e) {
         int offset = e.getOffset();
         int length = e.getLength();
-        if(!name.equals("(\\n)") || !name.equals("(\\t)")){
+        if(!name.equals("(\\n)") && !name.equals("(\\t)")){
             try {
                 name = e.getDocument().getText(offset,length);
             } catch (BadLocationException e1) {
