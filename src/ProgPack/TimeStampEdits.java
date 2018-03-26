@@ -73,7 +73,7 @@ public class TimeStampEdits extends CompoundEdit implements UndoableEdit
         int lineNumStartAtOne = lineNum+1;
 
 
-        MyLogger.write(new String[]{String.valueOf(timecreated), editType, "\"" + letter + "\"", String.valueOf(isHighlighted), String.valueOf(mark),
+        MyLogger.write(new String[]{String.valueOf(timecreated), editType,letter , String.valueOf(isHighlighted), String.valueOf(mark),
                 String.valueOf(dot), String.valueOf(start), String.valueOf(length), String.valueOf(lineNumStartAtOne)});
     }
 

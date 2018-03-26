@@ -257,13 +257,11 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     public void insertUpdate(DocumentEvent e) {
         int offset = e.getOffset();
         int length = e.getLength();
-        if(!name.equals("(\\n)") && !name.equals("(\\t)")){
             try {
                 name = e.getDocument().getText(offset,length);
             } catch (BadLocationException e1) {
                 e1.printStackTrace();
             }
-        }
     }
 
     /**
@@ -274,17 +272,17 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void removeUpdate(DocumentEvent e)
     {
-        if(previousText != null) {
-            int offset = e.getOffset();
-            int length = e.getLength();
-            if((offset + length) < previousText.length())
-            {
-                String removedStr = previousText.substring(e.getOffset(), e.getOffset() + e.getLength());
-                String withNewLines = removedStr.replaceAll("\n","\\(\\\\n\\)");
-                withNewLines = withNewLines.replaceAll("\t","\\(\\\\t\\)");
-                name = withNewLines;
-            }
-        }
+//        if(previousText != null) {
+//            int offset = e.getOffset();
+//            int length = e.getLength();
+//            if((offset + length) < previousText.length())
+//            {
+//                String removedStr = previousText.substring(e.getOffset(), e.getOffset() + e.getLength());
+//                String withNewLines = removedStr.replaceAll("\n","\\(\\\\n\\)");
+//                withNewLines = withNewLines.replaceAll("\t","\\(\\\\t\\)");
+//                name = withNewLines;
+//            }
+//        }
     }
 
     /**
@@ -335,13 +333,13 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void keyPressed(KeyEvent keyEvent)
     {
-        if(keyEvent.getExtendedKeyCode() == NEWLINEKEYCODE){
-            name = "(\\n)";
-        }
-        else if(keyEvent.getExtendedKeyCode() == TABKEYCODE){
-            name = "(\\t)";
-        }
-        previousText = pane.getText();
+//        if(keyEvent.getExtendedKeyCode() == NEWLINEKEYCODE){
+//            name = "(\\n)";
+//        }
+//        else if(keyEvent.getExtendedKeyCode() == TABKEYCODE){
+//            name = "(\\t)";
+//        }
+//        previousText = pane.getText();
     }
     /**
      * Required method for key listener. unused
