@@ -249,6 +249,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
 
 
 
+
     /**
      * Required method for Document listener. unused
      * @param e and change to the document
@@ -257,6 +258,8 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     public void insertUpdate(DocumentEvent e) {
         int offset = e.getOffset();
         int length = e.getLength();
+//        System.out.print(offset + ":");
+//        System.out.println(length);
             try {
                 name = e.getDocument().getText(offset,length);
             } catch (BadLocationException e1) {
@@ -272,6 +275,11 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void removeUpdate(DocumentEvent e)
     {
+        int offset = e.getOffset();
+        int length = e.getLength();
+        name = previousText.substring(offset,offset+length);
+
+
 //        if(previousText != null) {
 //            int offset = e.getOffset();
 //            int length = e.getLength();
@@ -333,13 +341,7 @@ class UndoOrganizer extends UndoManager implements UndoableEditListener, KeyList
     @Override
     public void keyPressed(KeyEvent keyEvent)
     {
-//        if(keyEvent.getExtendedKeyCode() == NEWLINEKEYCODE){
-//            name = "(\\n)";
-//        }
-//        else if(keyEvent.getExtendedKeyCode() == TABKEYCODE){
-//            name = "(\\t)";
-//        }
-//        previousText = pane.getText();
+        previousText = pane.getText();
     }
     /**
      * Required method for key listener. unused
