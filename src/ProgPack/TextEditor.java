@@ -33,7 +33,6 @@ public class TextEditor
         btnBegin.addActionListener(new beginAction(frame, timer, args));
 
         btnBegin.setLayout(new BorderLayout());
-
         BeginScreen.add(btnBegin, BorderLayout.CENTER);
         frame.setVisible(true);
         frame.setSize(800, 400);
@@ -41,8 +40,9 @@ public class TextEditor
 
     }
 
-    public static void Editor(Timer timer){
-        JFrame frame = new JFrame("Editor.UndoOrganizer");
+    public static void Editor(Timer timer, JFrame frame){
+        //JFrame frame = new JFrame("Editor.UndoOrganizer");
+
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -93,11 +93,11 @@ public class TextEditor
         mainPanel.setDividerLocation(screenSize.height-100);
         mainPanel.setDividerSize(10);
 
-        //Provide a preferred size for the split pane
-        //mainPanel.setPreferredSize(new Dimension(400, 200));
-//
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
+        frame.validate();
+        //frame.repaint();
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         //textArea.setRule(args[0]);
         //app.setTabSize(4);

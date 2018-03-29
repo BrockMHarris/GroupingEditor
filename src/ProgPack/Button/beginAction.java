@@ -22,9 +22,10 @@ public class beginAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        frame.setVisible(false);
+        //frame.setVisible(false);
         timer.begin();
         MyLogger.setup();
-        TextEditor.Editor(timer);
+        frame.remove(frame.getContentPane().getComponent(0));
+        TextEditor.Editor(timer, frame);
     }
 }
