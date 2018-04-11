@@ -5,8 +5,10 @@ import ProgPack.Timer;
 import ProgPack.Editor;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * listener for the Redo button in the window
@@ -35,6 +37,20 @@ public class doneAction implements ActionListener {
             timer.end();
             app.setEnabled(false);
             MyLogger.close();
+
+            Robot rob = null;
+            try {
+                rob = new Robot();
+            } catch (AWTException e1) {
+                e1.printStackTrace();
+            }
+            rob.keyPress(KeyEvent.VK_SHIFT);
+            rob.keyPress(KeyEvent.VK_CONTROL);
+            rob.keyPress(KeyEvent.VK_F2);
+
+            rob.keyRelease(KeyEvent.VK_SHIFT);
+            rob.keyRelease(KeyEvent.VK_CONTROL);
+            rob.keyRelease(KeyEvent.VK_F2);
         }
     }
 }
