@@ -30,16 +30,16 @@ public class Editor extends RSyntaxTextArea
         getDocument().addDocumentListener(undoOrganizer);
         keyBindings keyBindings = new keyBindings(this);
         setText("#When you are done press the \"Done\" button on the bottom right of the window\n" +
-                "#If you have any questions press the \"Questions button\". your session will be paused until the button is released\n" +
-                "#Please make sure your program works as intended by pressing  the \"Save and Run\" button\n\n" +
-                "def contains_duplicate(list_of_nums):\n" +
-                "\t\"\"\"\n\tTakes a list of integers as an input at returns True if that list contains 1 or more duplicated\n" +
-                "\treturn False if there is not duplicates in the list\n" +
+                "#If you have any questions press the \"Questions button\". your session will be paused until this button is released\n" +
+                "#Please make sure your program works as intended by pressing the \"Save and Run\" button in the top left corner\n\n" +
+                "def contains_duplicates(list_of_nums):\n" +
+                "\t\"\"\"\n\tTakes a list of integers as an input and returns True if that list contains 1 or more duplicates\n" +
+                "\treturn False if there are no duplicates in the list\n" +
                 "\tThe list cannot be changed by this function\n\t\"\"\"\n\n\n\n\n\t" +
                 "\nlist_with_dups = [1,3,2,4,3,6]" +
                 "\nlist_no_dups = [4,8,3,10,6,5]\n" +
-                "print(contains_duplicate(list_with_dups))  # should return True\n" +
-                "print(contains_duplicate(list_no_dups))    # should return False\n" );
+                "print(contains_duplicates(list_with_dups))  # should return True\n" +
+                "print(contains_duplicates(list_no_dups))    # should return False\n" );
             MyLogger.clear();
     }
 

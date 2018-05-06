@@ -9,17 +9,25 @@ import java.io.*;
  */
 public class MyLogger {
 
-    //private String filename = "~\\Test.txt";
     private static OutputStreamWriter osw;
     private static FileOutputStream fos;
     private static CSVWriter writer;
+    private static String fileName = "Log.csv";
 
     /**
      * Creates a new to hold all the log files
      */
     public static void setup() {
+        int i = 0;
+        File f = new File("Log.csv");
+        while(f.exists() && !f.isDirectory()) {
+            f = new File("Log" + i + ".csv");
+            fileName = "Log" + i + ".csv";
+            i++;
+        }
+
         try {
-            fos = new FileOutputStream("Log.csv");
+            fos = new FileOutputStream(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +57,8 @@ public class MyLogger {
     public static void clear()
     {
         MyLogger.close();
+        File currentLog = new File(fileName);
+        currentLog.delete();
         MyLogger.setup();
 
     }

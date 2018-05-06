@@ -12,7 +12,7 @@ import java.awt.event.ItemListener;
 public class questionAction implements ItemListener{
 
     Editor app;
-    JButton redo;
+    JToggleButton questionButton;
     Timer timer;
 
 
@@ -24,18 +24,21 @@ public class questionAction implements ItemListener{
      */
     public questionAction(Editor Editor, JToggleButton question, Timer timer) {
         app = Editor;
-        this.redo = redo;
+        this.questionButton = question;
         this.timer = timer;
+
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         if(e.getStateChange()==ItemEvent.SELECTED){
+            questionButton.setText("continue editing");
             app.setEditable(false);
             timer.pause();
 
 
         } else if(e.getStateChange()==ItemEvent.DESELECTED){
+            questionButton.setText("Questions");
             app.setEditable(true);
             timer.unPause();
         }

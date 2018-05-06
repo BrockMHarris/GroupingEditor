@@ -48,7 +48,12 @@ public class saveBtnAction implements ActionListener {
 
         terminalExecution command = new terminalExecution(terminalOutput);
         try {
-            command.execute("python3 program.py");
+            if(command.isWindows()){
+                command.execute("python.exe program.py");
+            }
+            else {
+                command.execute("python3 program.py");
+            }
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (InterruptedException e1) {

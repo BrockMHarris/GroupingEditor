@@ -32,7 +32,7 @@ public class doneAction implements ActionListener {
      */
     public void actionPerformed(ActionEvent e){
         int dialog = JOptionPane.showConfirmDialog(null, "Are you sure you are done",
-                                                    "Done", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                                                    "Done", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if(dialog == JOptionPane.YES_OPTION){
             timer.end();
             app.setEnabled(false);
